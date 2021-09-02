@@ -80,8 +80,8 @@ export default function AddMember(props) {
         Amount: e.target[26].value,
         Cust_Id: e.target[0].value,
         PayMethod: e.target[29].value,
-      },
-      img : e.target[30].value
+        DueDate : e.target[30].value
+      }
     };
 
     axios

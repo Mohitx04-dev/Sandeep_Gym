@@ -18,6 +18,7 @@ function PayHist(props) {
             <th>Comments</th>
             <th>Payment Method</th>
             <th>Recieved By</th>
+            <th>Due Payment By</th>
           </tr>
         </thead>
         <tbody>
@@ -34,6 +35,7 @@ function PayHist(props) {
            <td>{txn.Comments}</td>
            <td>{txn.PayMethod}</td>
            <td>{txn.RecievedBy}</td>
+           <td>{txn.DueDate ? <Timestamp date={txn.DueDate}/> : null}</td>
          </tr>)
       }) : null
       }

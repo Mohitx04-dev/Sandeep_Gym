@@ -6,15 +6,26 @@ import { Link } from 'react-router-dom';
 import DeleteModal from '../../util/delete-modal';
 import BranchSelector from '../utility/BranchSelector';
 import dateFormat from 'dateformat';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+
+
+
 export default function Reports(props) {
     
     const [Member, setMember] = useState([]);
+    const [MemberFilter,setMemberFilter] = useState([])
     const [Branch, setBranch] = useState([])
     const [CurrentBranch, setCurrentBranch] = useState()
     const [modalShow, setModalShow] = useState(false);
     const [req, setreq] = useState(false);
     const [toDelete,settoDelete] = useState("");
     const [viewType, setviewType] = useState(0)
+    const [startDate, setstartDate] = useState()
+    const [endDate, setendDate] = useState()
+    const [focusedInput,setfocusedInput] = useState()
+
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': props.User.token,
@@ -37,6 +48,7 @@ export default function Reports(props) {
             {
             for (var i = 0; i < response.data.length; i++) {
                 setMember(state => [...state, response.data[i]])
+                setMemberFilter(state => [...state, response.data[i]])
             }
             });
       })
@@ -47,6 +59,7 @@ export default function Reports(props) {
   
                 
       }, []);
+ 
     return (
         <>
         <div  className="text-center">
@@ -70,16 +83,28 @@ export default function Reports(props) {
                <Form
                  onSubmit={(e) => {
                    e.preventDefault();
-                   console.log(e.target[0].value);
+                   console.log(startDate._d,endDate._d)
                    var newArray = Member.filter(function (el) {
                      var current_date = dateFormat(el.Valid_Till, "isoDate");
-                     return current_date <= e.target[0].value;
+                     var sd = dateFormat(startDate._d, "isoDate");
+                     var ed = dateFormat(endDate._d, "isoDate");
+                     return( current_date <= ed && current_date >=sd);
                    });
-                   setMember(newArray);
+                   setMemberFilter(newArray);
                  }}
                >
-                 <Form.Label>Enter Date</Form.Label>
-                 <Form.Control type="date" placholder="Enter Date of Txn" />
+                 <DateRangePicker
+                    startDate={startDate} // momentPropTypes.momentObj or null,
+                    startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                    endDate={endDate} // momentPropTypes.momentObj or null,
+                    endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                    onDatesChange={({ startDate, endDate }) => {
+                      setMemberFilter(Member)
+                      setstartDate(startDate)
+                       setendDate(endDate)}} // PropTypes.func.isRequired,
+                    focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                    onFocusChange={focusedInput => setfocusedInput(focusedInput)} // PropTypes.func.isRequired,
+                  />
                  <Button className="p-2 my-2" variant="primary" type="submit">
                  Filter
                  </Button>
@@ -91,10 +116,11 @@ export default function Reports(props) {
                    var newArray = Member.filter(function (el) {
                     return el.Branch == e.target[0].value;
                   });
-                  setMember(newArray);
+                  setMemberFilter(newArray);
                  }}
                >
                  <BranchSelector User={props.User} />
+            
                  <Button className="p-2 my-2" variant="primary" type="submit">
                  Filter
                  </Button>
@@ -108,22 +134,52 @@ export default function Reports(props) {
        </tr>
      </thead>
      <tbody>
-     {Member.map(mem=>{
-         return(
-           <tr key={mem.Cust_Id}>
-           <td>{mem.Cust_Id}</td>
-           <td>{mem.Name}</td>
-           <td>{mem.Active ?<Timestamp date={mem.Valid_Till} />: <p className="text-danger font-weight-bold">Expired on <Timestamp date={mem.Valid_Till} /></p>} </td>
-         </tr>
-         
-         )
-   })
+     {
+      MemberFilter.map(mem=>{
+        return(
+          <tr key={mem.Cust_Id}>
+          <td>{mem.Cust_Id}</td>
+          <td>{mem.Name}</td>
+          <td>{mem.Active ?<Timestamp date={mem.Valid_Till} />: <p className="text-danger font-weight-bold">Expired on <Timestamp date={mem.Valid_Till} /></p>} </td>
+        </tr>
+        )
+  })
    }
      </tbody>
    </Table>
    </div>
  : <div>
-     <Form
+                 <Form
+                 onSubmit={(e) => {
+                   e.preventDefault();
+                   console.log(startDate._d,endDate._d)
+                   var newArray = Member.filter(function (el) {
+                     var current_date = dateFormat(el.Payment[el.Payment.length-1]['DueDate'], "isoDate");
+                     console.log(current_date)
+                     var sd = dateFormat(startDate._d, "isoDate");
+                     var ed = dateFormat(endDate._d, "isoDate");
+                     return( current_date <= ed && current_date >=sd);
+                   });
+                   setMemberFilter(newArray);
+                 }}
+               >
+                 <DateRangePicker
+                    startDate={startDate} // momentPropTypes.momentObj or null,
+                    startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                    endDate={endDate} // momentPropTypes.momentObj or null,
+                    endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                    onDatesChange={({ startDate, endDate }) => {
+                      setMemberFilter(Member)
+                      setstartDate(startDate)
+                       setendDate(endDate)}} // PropTypes.func.isRequired,
+                    focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                    onFocusChange={focusedInput => setfocusedInput(focusedInput)} // PropTypes.func.isRequired,
+                  />
+                 <Button className="p-2 my-2" variant="primary" type="submit">
+                 Filter
+                 </Button>
+               </Form>
+              <Form
                  onSubmit={(e) => {
                    e.preventDefault();
                    console.log(e.target[0].value);
@@ -144,31 +200,37 @@ export default function Reports(props) {
          <th>Id</th>
          <th>Name</th>
          <th>Total Due</th>
+         <th>Pay Due By</th>
        </tr>
      </thead>
      <tbody>
-     {Member.map(mem=>{
-         var due=0;
-         console.log(mem.Payment[0])
-         for(var x=0; x<mem.Payment.length; x++) {
-             var temp = mem.Payment[x].Due;
-             due += parseFloat(temp)
-         }
-         if(due==0) {
-            return null
-         }
-         else {
-            return(
-                <tr key={mem.Cust_Id}>
-                <td>{mem.Cust_Id}</td>
-                <td>{mem.Name}</td>
-                <td>{due}</td>
-              </tr>
-              
-              )
-         }
-        
-   })
+     {
+     MemberFilter.map(mem=>{
+      var due=0;
+      var dueDate;
+      if(mem.Payment[mem.Payment.length-1]['DueDate']) {
+        dueDate = mem.Payment[mem.Payment.length-1]['DueDate'];
+      }
+      for(var x=0; x<mem.Payment.length; x++) {
+          var temp = mem.Payment[x].Due;
+          due += parseFloat(temp)
+      }
+      if(due==0) {
+         return null
+      }
+      else {
+         return(
+             <tr key={mem.Cust_Id}>
+             <td>{mem.Cust_Id}</td>
+             <td>{mem.Name}</td>
+             <td>{due}</td>
+             <td>{dueDate ? <Timestamp date={dueDate} />: null}</td>
+           </tr>
+           
+           )
+      }
+     
+})
    }
    <DeleteModal show={modalShow}
            reqDelete={() => {

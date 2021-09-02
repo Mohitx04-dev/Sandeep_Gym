@@ -63,7 +63,8 @@ function PayDue(props) {
         Customer_Name: Userdt.Name,
         Amount: event.target[4].value,
         Cust_Id: Userdt.Cust_Id,
-        PayMethod : event.target[7].value
+        PayMethod : event.target[7].value,
+        DueDate : event.target[8].value
       }
     };
     console.log("/api/member/" + mid + "/" + txid);

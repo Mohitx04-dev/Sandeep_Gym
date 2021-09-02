@@ -48,7 +48,8 @@ var schema = new mongoose.Schema({
             Due : Number,
             Comments :String,
             PayMethod : String,
-            RecievedBy : String
+            RecievedBy : String,
+            DueDate : Date
         },
     ],
     Branch : {

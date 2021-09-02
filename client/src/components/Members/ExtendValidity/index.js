@@ -61,7 +61,9 @@ function Extend (props) {
                 Paid : e.target[6].value,
                 Due : e.target[7].value,
                 Comments  : e.target[8].value,
-                PayMethod : e.target[9].value},
+                PayMethod : e.target[9].value,
+                DueDate : e.target[10].value
+            },
             Valid_Till : Validity,
             BranchName : Userdt.Branch,
             PayBr : {

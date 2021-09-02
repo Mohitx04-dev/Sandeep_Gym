@@ -28,7 +28,9 @@ function PayField(prop) {
            Field=Pay.Comments;
          }else if(Field=='PayMethod'){
            Field=Pay.PayMethod
-         }
+         }else if(Field=='DueDate'){
+          Field=Pay.DueDate
+        }
      }
          return (
              <>
@@ -78,6 +80,12 @@ function PayField(prop) {
                 Type="text"
                 placeholder="Enter Payment Method"
                 field="PayMethod"
+                />
+                    <PaySelector
+                Name="Date for Due Payment"
+                Type="date"
+                placeholder="Enter Date"
+                field="DueDate"
                 />
         </div>
     )
