@@ -43,11 +43,12 @@ function Extend (props) {
         e.preventDefault();
         console.log(radio)
         var Month = e.target[2].value;
+        console.log(Userdt.Valid_Till)
         if(radio==0) {
             var Validity = new Date(Userdt.Valid_Till.valueOf());
         }
         else {
-            var Validity = new Date(e.target[3].value.valueOf());
+            var Validity = new Date(e.target[4].value.valueOf());
         }
         var Days = e.target[3].value;
         console.log(Days)
@@ -73,6 +74,7 @@ function Extend (props) {
                 Cust_Id : Userdt.Cust_Id
             }
         }
+        console.log(Validity)
                 axios
                 .put("/api/member-extend/"+mid,   Article,{headers:headers})
                 .then(() => {
@@ -93,6 +95,7 @@ function Extend (props) {
     function Radio() {
        const onValChange = (event) => {
            event.preventDefault();
+           console.log(event.target.value)
             setradio(event.target.value);
           }
         if(props.Renew) {

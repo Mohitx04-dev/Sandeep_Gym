@@ -155,7 +155,7 @@ export default function ViewMembers(props) {
 <DeleteModal show={modalShow}
         reqDelete={() => {
             axios
-            .delete('http://localhost:3000/api/member/'+toDelete,{headers:headers})
+            .delete('/api/member/'+toDelete,{headers:headers})
             .then(()=>{
               alert('Deleted Member')
               window.location.href = '/member/view'
