@@ -1,6 +1,7 @@
 import React from 'react'
 import BranchSelector from "../Members/utility/BranchSelector";
 import {Form,Button} from 'react-bootstrap'
+import Search from './util/search';
 function Home(props) {
     return (
         
@@ -34,18 +35,9 @@ function Home(props) {
           </div>
           <div className="col-6 col-md-6 col-xs-12 ">
            <h3>Search Member</h3>
-           <Form onSubmit={((e)=>{
-              e.preventDefault();
-                window.location.href="/member/"+e.target[0].value+'/FullView'
-            })}>
-           <Form.Label>Enter ID</Form.Label>
-            <Form.Control type="text" placholder="Enter Id of Member"  />
-            <Button className="p-2 my-2" variant="primary" type="submit">
-                Submit
-              </Button>
-           </Form>
-       
-            </div>
+           <Search />
+            
+           </div>
         </div>
     )
 }

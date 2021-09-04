@@ -1,5 +1,7 @@
 import React, { useState , useEffect} from "react";
 import { Switch, Route,Router } from "react-router-dom";
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
+
 import AddBranches from "../branches/AddBranches";
 import ShowBranches from "../branches/ShowBranches";
 import AddMember from "../Members/NewMember";
@@ -22,6 +24,8 @@ import ViewPT from "../PT/ViewPT";
 import UpdatePT from "../PT/UpdatePT";
 import Profile from "../Auth/profile";
 import Reports from "../Members/Reports";
+import ProfileImg from "../Members/utility/profileImg";
+
 function Main() {
   const [Status, setStatus] = useState(false)
   var Usr = localStorage.getItem('User')
@@ -72,6 +76,7 @@ function Main() {
          <Route exact path="/sales/:name"><ShowSales  User={Usr}/></Route>
          <Route exact path="/member/update/:id"><UpdateMember  User={Usr}/></Route>
          <Route exact path="/member/extend/:id"><Extend  User={Usr}/></Route>
+         <Route exact path="/test"><ProfileImg  User={Usr}/></Route>
          <Route exact path="/member/extend/:id/Renew">
          {
            <Extend Renew={true}  User={Usr}/>

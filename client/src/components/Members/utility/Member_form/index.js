@@ -2,6 +2,8 @@ import { Form } from "react-bootstrap";
 import React from "react";
 import PayField from "../PayUtil";
 import BranchSelector from "../BranchSelector";
+
+
 function getFormattedDate(date) {
     date = new Date(date);
     var day = ('0' + date.getDate()).slice(-2);
@@ -208,7 +210,7 @@ const MemberForm = (prop) => {
                         </Form.Control>
           <hr />
           <h2>Payment</h2>
-            <PayField Member={prop.Member} Editable={prop.EditPay} />
+            <PayField Member={prop.Member} Editable={prop.EditPay} />  
         </Form.Group>
     )
 }

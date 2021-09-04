@@ -104,6 +104,7 @@ export default function Reports(props) {
                        setendDate(endDate)}} // PropTypes.func.isRequired,
                     focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                     onFocusChange={focusedInput => setfocusedInput(focusedInput)} // PropTypes.func.isRequired,
+                    isOutsideRange={() => false}
                   />
                  <Button className="p-2 my-2" variant="primary" type="submit">
                  Filter
@@ -113,7 +114,7 @@ export default function Reports(props) {
                  onSubmit={(e) => {
                    e.preventDefault();
                    console.log(e.target[0].value);
-                   var newArray = Member.filter(function (el) {
+                   var newArray = MemberFilter.filter(function (el) {
                     return el.Branch == e.target[0].value;
                   });
                   setMemberFilter(newArray);
@@ -174,7 +175,8 @@ export default function Reports(props) {
                        setendDate(endDate)}} // PropTypes.func.isRequired,
                     focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                     onFocusChange={focusedInput => setfocusedInput(focusedInput)} // PropTypes.func.isRequired,
-                  />
+                    isOutsideRange={() => false}
+                    />
                  <Button className="p-2 my-2" variant="primary" type="submit">
                  Filter
                  </Button>
@@ -183,10 +185,10 @@ export default function Reports(props) {
                  onSubmit={(e) => {
                    e.preventDefault();
                    console.log(e.target[0].value);
-                   var newArray = Member.filter(function (el) {
+                   var newArray = MemberFilter.filter(function (el) {
                     return el.Branch == e.target[0].value;
                   });
-                  setMember(newArray);
+                  setMemberFilter(newArray);
                  }}
                >
                  <BranchSelector User={props.User} />

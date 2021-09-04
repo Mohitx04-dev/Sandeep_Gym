@@ -4,8 +4,10 @@ import axios from 'axios'
 import Timestamp from 'react-timestamp';
 import { Link } from 'react-router-dom';
 import DeleteModal from '../../util/delete-modal';
-import BranchSelector from '../utility/BranchSelector';
 import dateFormat from 'dateformat';
+
+
+
 export default function ViewMembers(props) {
 
     const [Member, setMember] = useState([]);
@@ -72,6 +74,39 @@ export default function ViewMembers(props) {
               Filter
               </Button>
             </Form>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log(e.target[0].value);
+                var newArray = Member.filter(function (el) {
+                  return el.Name.match(e.target[0].value);
+                });
+                setMember(newArray);
+              }}
+            >
+              <Form.Label>Enter Name</Form.Label>
+              <Form.Control type="text" placholder="Enter Name" />
+              <Button className="p-2 my-2" variant="primary" type="submit">
+              Filter
+              </Button>
+            </Form>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log(e.target[0].value);
+                var newArray = Member.filter(function (el) {
+                  return el.Contact_No ? String(el.Contact_No).match(e.target[0].value) :  null
+                });
+                setMember(newArray);
+              }}
+            >
+              <Form.Label>Enter Phone Id</Form.Label>
+              <Form.Control type="number" placholder="Enter Name" />
+              <Button className="p-2 my-2" variant="primary" type="submit">
+              Filter
+              </Button>
+            </Form>
+            
       <Table striped bordered hover>
   <thead>
     <tr>
@@ -89,6 +124,7 @@ export default function ViewMembers(props) {
   <tbody>
   {Member.map(mem=>{
     if(getMembers(mem) || (CurrentBranch==null)) {
+      console.log(mem.Contact_No)
       return(
         <tr key={mem.Cust_Id}>
         <td>{mem.Cust_Id}</td>

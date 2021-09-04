@@ -29,7 +29,7 @@ function Header() {
     return (
 <Navbar bg="dark" expand="lg">
   <Container >
-    <Navbar.Brand href="/" className={styles.Text}>Sandeep's Fitness Center</Navbar.Brand>
+    <Navbar.Brand href="/" className={styles.Text}><img src={Logo} width={"80px"}/></Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto" >
