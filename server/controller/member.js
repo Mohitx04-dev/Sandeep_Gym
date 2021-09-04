@@ -12,6 +12,7 @@ exports.createMember = (req, res,next) => {
   Pay["RecievedBy"] = req.user.username;
   const Payment = [];
   Payment.push(Pay);
+  console.log(req.body)
   const Member = new Members({
     Cust_Id: req.body.Cust_Id,
     Name: req.body.Name,
@@ -37,6 +38,7 @@ exports.createMember = (req, res,next) => {
     Occupation: req.body.Occupation,
     Reference: req.body.Reference,
     Service: req.body.Service,
+    url: req.body.url,
   });
 
   if (Member.Branch == req.get("branch") || req.user.role == "superadmin")

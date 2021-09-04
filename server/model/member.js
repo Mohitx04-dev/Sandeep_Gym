@@ -94,8 +94,9 @@ var schema = new mongoose.Schema({
     Active: {
         type: Boolean
     },
-    
-    
+    url : {
+        type: String
+    }
 })
 
 const Members = mongoose.model("customers", schema);

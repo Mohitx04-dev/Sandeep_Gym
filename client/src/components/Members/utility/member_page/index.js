@@ -1,10 +1,10 @@
 import react, {useState, useEffect} from 'react'
 import { Form, Button, Alert} from "react-bootstrap";
 import { BrowserRouter, Route } from "react-router-dom";
+import styles from "./styles.module.css"
 import axios from 'axios'
 import MemberForm from "../Member_form"
 import PayHist from '../PaymentHistory';
-
 export default function MemberPg(props) {
     const headers = {
         'Content-Type': 'application/json',
@@ -28,6 +28,12 @@ export default function MemberPg(props) {
     if(Userdt) {
     return (
         <div>
+            {Userdt.url  ? 
+               <div className={styles.picHolder}>
+               <img id="profilePic" className={styles.pic} src={Userdt.url}/>
+               </div>
+               : null
+        } 
         <Form>
         <MemberForm Member={Userdt} Editable={false} EditPay={false}/>
         </Form>

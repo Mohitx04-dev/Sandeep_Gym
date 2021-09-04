@@ -5,6 +5,7 @@ import axios from "axios";
 import date from "date-and-time";
 import SuccessModal from "../../util/success-modal";
 import ErrorModal from "../../util/error-modal";
+import ProfileImg from "../utility/profileImg";
 
 function addMonths(date, months) {
   var d = date.getDate();
@@ -23,6 +24,7 @@ export default function AddMember(props) {
   const [sucModalShow, setsucModalShow] = useState(false);
   const [errModalShow, seterrModalShow] = useState(false);
   const [MemberId, setMemberId] = useState(0);
+  const [url,setUrl] = useState("")
   const headers = {
     "Content-Type": "application/json",
     Authorization: props.User.token,
@@ -81,7 +83,8 @@ export default function AddMember(props) {
         Cust_Id: e.target[0].value,
         PayMethod: e.target[29].value,
         DueDate : e.target[30].value
-      }
+      },
+      url : url
     };
 
     axios
@@ -96,6 +99,7 @@ export default function AddMember(props) {
   }
   return (
     <>
+    <ProfileImg setUrl = {setUrl}/>
       <Form
         onSubmit={Sub}
       >

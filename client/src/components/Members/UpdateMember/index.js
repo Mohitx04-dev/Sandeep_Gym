@@ -3,7 +3,9 @@ import { Form, Button } from "react-bootstrap";
 import MemberForm from "../utility/Member_form"
 import axios from "axios";
 import date from "date-and-time";
-
+import ProfileImg from "../utility/profileImg";
+import SuccessModal from "../../util/success-modal";
+import ErrorModal from "../../util/error-modal";
 function addMonths(date, months) {
   var d = date.getDate();
   date.setMonth(date.getMonth() + +months);
@@ -18,7 +20,10 @@ export default function UpdateMember(props) {
         'Authorization': props.User.token,
         'branch' : props.User.branch
     }
+    const [sucModalShow, setsucModalShow] = useState(false);
+    const [errModalShow, seterrModalShow] = useState(false);
   const [Memberid, setMemberId] = useState(0);
+  const [url,setUrl] = useState("")
     var mid = window.location.pathname.split("/");
     mid = mid[3];
     const [Userdt, setUserdt] = useState();
@@ -32,7 +37,8 @@ export default function UpdateMember(props) {
         })
     },[])
     if(Userdt) {
-  function Sub(e) {
+  const Sub = (e) => {
+    e.preventDefault()
     const article = {
       Cust_Id: e.target[0].value,
       Name: e.target[1].value,
@@ -55,17 +61,21 @@ export default function UpdateMember(props) {
       Workout_Choice: e.target[18].value,
       CounselledBy : e.target[19].value,
       JoinedBy : e.target[20].value,
-      Time : e.target[21].value
+      Time : e.target[21].value,
+      url : url
     };
     axios
       .put("/api/member/"+mid, article,{headers:headers})
       .then((response) => setMemberId(response.data.id))
       .then(() => {
-        alert("Successfully Updated");
+        setsucModalShow(true);
+      }).catch((e) => {
+        seterrModalShow(true);
       });
   }
   return (  
     <>
+    <ProfileImg setUrl = {setUrl} />
       <Form
         onSubmit={Sub}
       >
@@ -74,6 +84,20 @@ export default function UpdateMember(props) {
           Submit
         </Button>
       </Form>
+      <SuccessModal
+        show={sucModalShow}
+        redirect={() => (window.location.href = "/member/view")}
+        onClose={() => {
+          setsucModalShow(false);
+        }}
+      ></SuccessModal>
+      <ErrorModal
+        show={errModalShow}
+        redirect={() => seterrModalShow(false)}
+        onClose={() => {
+          seterrModalShow(false);
+        }}
+      ></ErrorModal>
     </>
   ); }
   else {
