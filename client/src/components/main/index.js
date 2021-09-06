@@ -25,6 +25,7 @@ import UpdatePT from "../PT/UpdatePT";
 import Profile from "../Auth/profile";
 import Reports from "../Members/Reports";
 import ProfileImg from "../Members/utility/profileImg";
+import EditTxn from "../Members/EditTransaction";
 
 function Main() {
   const [Status, setStatus] = useState(false)
@@ -83,6 +84,7 @@ function Main() {
          }
          </Route>
          <Route exact path="/PayDue/:id/:txid"><PayDue User={Usr} /></Route>
+         <Route exact path="/Edit/:id/:txid"><EditTxn User={Usr} /></Route>
          </Switch>
        : <Signin />
       }

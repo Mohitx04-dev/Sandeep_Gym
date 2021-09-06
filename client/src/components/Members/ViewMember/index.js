@@ -129,7 +129,7 @@ export default function ViewMembers(props) {
         <tr key={mem.Cust_Id}>
         <td>{mem.Cust_Id}</td>
         <td>{mem.Name}</td>
-        <td><Timestamp date={mem.DOJ} /></td>
+        <td><Timestamp date={mem.DOJ}/></td>
         <td>{mem.Branch}</td>
         <td>{mem.Active ?<Timestamp date={mem.Valid_Till} />: <p className="text-danger font-weight-bold">Expired on <Timestamp date={mem.Valid_Till} /></p>} </td>
         <td>

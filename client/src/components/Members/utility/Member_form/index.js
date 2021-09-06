@@ -210,7 +210,7 @@ const MemberForm = (prop) => {
                         </Form.Control>
           <hr />
           <h2>Payment</h2>
-            <PayField Member={prop.Member} Editable={prop.EditPay} />  
+            <PayField Member={prop.Member} Editable={prop.EditPay} First={true}/>  
         </Form.Group>
     )
 }

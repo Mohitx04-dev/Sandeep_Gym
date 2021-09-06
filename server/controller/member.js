@@ -1,4 +1,5 @@
 var Members = require("../model/member");
+var mongoose = require('mongoose');
 
 // create and save new Member
 exports.createMember = (req, res,next) => {
@@ -10,6 +11,10 @@ exports.createMember = (req, res,next) => {
   // new Member
   const Pay = req.body.Payment[0];
   Pay["RecievedBy"] = req.user.username;
+  var newId = new mongoose.mongo.ObjectId();
+  console.log(newId)
+  Pay["_id"] = newId
+  req.txid = newId
   const Payment = [];
   Payment.push(Pay);
   console.log(req.body)
@@ -301,6 +306,10 @@ exports.UpdateDue = (req, res,next) => {
   const id = req.params.id;
   const txid = req.params.txid;
   const Pay = req.body.pay;
+  var newId = new mongoose.mongo.ObjectId();
+  console.log(newId)
+  Pay["_id"] = newId
+  req.txid = newId
   Pay["RecievedBy"] = req.user.username;
   console.log(req.body)
   if (id) {
@@ -389,10 +398,13 @@ exports.ExtendValidity = (req, res,next) => {
   }
   const id = req.params.id;
   const Pay = req.body.Pay;
+  var newId = new mongoose.mongo.ObjectId();
+  console.log(newId)
+  Pay["_id"] = newId
+  req.txid = newId
   Pay["RecievedBy"] = req.user.username;
   const Validity = req.body.Valid_Till;
   var Branch;
-  console.log(req.body)
   Members.findOne({ Cust_Id: id })
   .then((data) => { 
         Branch = data.Branch;
@@ -410,7 +422,7 @@ exports.ExtendValidity = (req, res,next) => {
                         message: `Cannot Update Branch with ${id}. Maybe Branch not found!`,
                       });
                   } else {
-                    next()
+                     next()
                   }
                 })
                 .catch((err) => {
@@ -422,3 +434,52 @@ exports.ExtendValidity = (req, res,next) => {
         }
   })
 };
+
+
+exports.EditPayment = (req,res,next) => {
+  console.log('inside')
+  if (!req.body) {
+    return res.status(400).send({ message: "Data to update can not be empty" });
+  }
+  const id = req.params.id;
+  const txid = req.params.txid;
+  Members.update(
+        { Cust_Id: id, "Payment._id": txid },
+        {        
+          $set: {
+            "Payment.$.Paid": req.body.Paid,
+            "Payment.$.Due": req.body.Due,
+            "Payment.$.Date": req.body.Date,
+            "Payment.$.Total": req.body.Total,
+            "Payment.$.Comments": req.body.Comments,
+            "Payment.$.PayMethod": req.body.PayMethod,
+            "Payment.$.RecievedBy": req.user.username,
+            "Payment.$.DueDate": req.body.DueDate,
+          },
+        }).then(()=>{
+          next()
+        })
+        .catch((err) => {
+         res.status(500).send({ message: "Error Update Member information" });
+          });
+}
+
+exports.getTxn = (req,res) =>{
+  const id = req.params.id;
+  const txid = req.params.txid;
+  console.log(id,txid)
+  Members.find({ "Payment": { $elemMatch: { _id: txid}}}).then((data)=>{
+    if (!data) {
+      res.status(404).send({ message: "Not found Member with id " + id });
+    } else {
+      for(var i=0; i<data[0].Payment.length;i++) {
+          console.log(data[0].Payment[i]._id)
+          if(data[0].Payment[i]._id==txid) {
+            res.send(data[0].Payment[i])
+          }
+      }
+    }
+  }).catch((e)=>{
+    res.send("ERROR")
+  })
+}

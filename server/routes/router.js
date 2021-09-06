@@ -54,6 +54,10 @@ route.get('/api/member/:id/:txid',useAuth,
 checkRoleandPermissions(['payDue']),member.findTransaction);
 route.put('/api/member/:id/:txid',useAuth,
 checkRoleandPermissions(['payDue']),member.UpdateDue,controller.AddBranchPayment);
+route.put('/api/member-txn/:id/:txid',useAuth,
+checkRoleandPermissions(['editTxn']),member.EditPayment,controller.EditBranchPayment);
+route.get('/api/member-txn/:id/:txid',useAuth,
+checkRoleandPermissions(['editTxn']),member.getTxn);
 route.put('/api/validateUp/', member.updateValidityUp);
 route.put('/api/validateDown/', member.updateValidityDown);
 route.post('/api/PT',useAuth,

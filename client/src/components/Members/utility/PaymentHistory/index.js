@@ -19,6 +19,7 @@ function PayHist(props) {
             <th>Payment Method</th>
             <th>Recieved By</th>
             <th>Due Payment By</th>
+            <th>Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -36,6 +37,7 @@ function PayHist(props) {
            <td>{txn.PayMethod}</td>
            <td>{txn.RecievedBy}</td>
            <td>{txn.DueDate ? <Timestamp date={txn.DueDate}/> : null}</td>
+           <td><Link to={"/edit/" + props.Member.Cust_Id+ "/"+txn._id} className="btn btn-warning">Edit</Link></td>
          </tr>)
       }) : null
       }

@@ -51,7 +51,8 @@ function PayDue(props) {
       Paid: event.target[4].value,
       Due: event.target[5].value,
       Comments: event.target[6].value,
-      PayMethod : event.target[7].value
+      PayMethod : event.target[7].value,
+      DueDate : event.target[8].value
     };
     const UpdateDue = {
       Due: 0,

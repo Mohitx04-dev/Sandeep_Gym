@@ -40,6 +40,7 @@ export default function AddMember(props) {
       Due: e.target[27].value,
       Comments: e.target[28].value,
       PayMethod: e.target[29].value,
+      DueDate : e.target[30].value
     };
 
     Arr.push(Pay);

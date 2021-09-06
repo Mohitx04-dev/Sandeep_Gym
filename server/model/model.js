@@ -11,7 +11,8 @@ var schema = new mongoose.Schema({
             Date : Date,
             Cust_Id : String,
             PayMethod : String,
-            RecievedBy : String
+            RecievedBy : String,
+            txid : String
         }
     ]
     ,

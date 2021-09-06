@@ -123,6 +123,7 @@ else {
 
 
 exports.AddBranchPayment = (req, res)=>{
+    console.log('inside')
     if(!req.body){
         return res
             .status(400)
@@ -131,6 +132,7 @@ exports.AddBranchPayment = (req, res)=>{
     const id = req.body.BranchName;
     if(id==req.user.branch || req.user.role=='superadmin'||req.user.permissions['AllBranches']) {
         const Pay = req.body.PayBr;
+        Pay["txid"] = req.txid;
         Pay["RecievedBy"] = req.user.username;
         console.log(id,Pay)
         Branchs.updateOne({Name:id},
@@ -152,5 +154,44 @@ exports.AddBranchPayment = (req, res)=>{
     }
    
 }
+
+exports.EditBranchPayment = (req, res)=>{
+    if(!req.body){
+        return res
+            .status(400)
+            .send({ message : "Data to update can not be empty"})
+    }
+    const id = req.body.BranchName;
+    const uid = req.params.txid;
+
+    if(id==req.user.branch || req.user.role=='superadmin'||req.user.permissions['AllBranches']) {
+        Branchs.findOneAndUpdate({Name:id, "Payments.txid":uid},
+            {
+                $set:{
+                   "Payments.$.Amount" : req.body.Amount,
+                   "Payments.$.Customer_Name" : req.body.Customer_Name,
+                   "Payments.$.Cust_Id" : req.body.Cust_Id,
+                   "Payments.$.Date" : req.body.Date,
+                   "Payments.$.PayMethod" : req.body.PayMethod,
+                   "Payments.$.RecievedBy" : req.user.username
+
+                }
+            })
+            .then(data => {
+                    if(!data){
+                        res.status(404).send({ message : `Cannot Update Branch with ${id}. Maybe Branch not found!`})
+                    }else{
+                        res.send(data)
+                    }
+                }).catch(err =>{
+                    res.status(500).send({ message : "Error Update Branch information"})
+                })
+    }
+    else {
+        res.status(500).send({ message : "Error Update Branch information"})
+    }
+   
+}
+
 
 
