@@ -8,7 +8,17 @@ function getFormattedDate(date) {
   var year = date.getFullYear();
   return year + "-" + month + "-" + day;
 }
-
+function getFormattedDateTime(date) {
+  date = new Date(date);
+  var day = ('0' + date.getDate()).slice(-2);
+  var month = ('0' + (date.getMonth() + 1)).slice(-2);
+  var year = date.getFullYear();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+  console.log(hours,minutes,seconds)
+  return year + '-' + month + '-' + day +'T' + hours +':'+minutes+':'+((seconds===0)? '00' : seconds);
+}
 function PayField(prop) {
   var Pay;
   if (prop.Member && prop.First) {
@@ -29,8 +39,8 @@ function PayField(prop) {
         <Form.Control
           type={payprop.Type}
           defaultValue={
-            (prop.Member && payprop.Type == "date")
-              ? getFormattedDate(payprop.Pay[payprop.field])
+            (prop.Member && payprop.Type == "datetime-local")
+              ? getFormattedDateTime(payprop.Pay[payprop.field])
               : prop.Member
               ? payprop.Pay[payprop.field]
               : payprop.isDue
@@ -56,8 +66,8 @@ if(Pay) {
     <div>
       <PaySelector
         Name="Date"
-        Type="date"
-        placeholder="Enter Date of Birth"
+        Type="datetime-local"
+        placeholder="Enter Date"
         field="Date"
         Pay={Pay}
       />
@@ -104,7 +114,7 @@ if(Pay) {
       />
       <PaySelector
         Name="Date for Due Payment"
-        Type="date"
+        Type="datetime-local"
         placeholder="Enter Date"
         field="DueDate"
         Pay={Pay}

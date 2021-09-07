@@ -87,7 +87,7 @@ export default function AddMember(props) {
       },
       url : url
     };
-
+    console.log(article)
     axios
       .post("/api/member", article, { headers: headers })
       .then((response) => setMemberId(response.data.id))

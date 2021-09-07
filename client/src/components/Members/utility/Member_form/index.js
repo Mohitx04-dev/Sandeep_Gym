@@ -3,13 +3,23 @@ import React from "react";
 import PayField from "../PayUtil";
 import BranchSelector from "../BranchSelector";
 
-
 function getFormattedDate(date) {
     date = new Date(date);
     var day = ('0' + date.getDate()).slice(-2);
     var month = ('0' + (date.getMonth() + 1)).slice(-2);
     var year = date.getFullYear();
     return year + '-' + month + '-' + day;
+  }
+  function getFormattedDateTime(date) {
+    date = new Date(date);
+    var day = ('0' + date.getDate()).slice(-2);
+    var month = ('0' + (date.getMonth() + 1)).slice(-2);
+    var year = date.getFullYear();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    console.log(seconds)
+    return year + '-' + month + '-' + day +'T' + hours +':'+minutes+':'+((seconds===0)? '00' : seconds);
   }
 const MemberForm = (prop) => {
     function Selecter(props) {
@@ -18,6 +28,9 @@ const MemberForm = (prop) => {
         if(props.Type=='date') {
             Field = getFormattedDate(prop.Member[Field]);
         }
+        else if(props.Type=='datetime-local') {
+          Field = getFormattedDateTime(prop.Member[Field]);
+        }
         else {
             Field = prop.Member[Field];
         } 
@@ -25,7 +38,7 @@ const MemberForm = (prop) => {
           return (
           <>
             <Form.Label>{props.Name}</Form.Label>
-            <Form.Control type={props.Type} defaultValue={prop.Member?Field : (props.def==0 ? props.def : null)} placeholder={props.placeholder} disabled={prop.Editable==false? true:false} />
+            <Form.Control type={props.Type} defaultValue={prop.Member?Field :(props.def==0 ? props.def : null)} placeholder={props.placeholder} disabled={prop.Editable==false? true:false} />
           </>
         );
       }
@@ -90,7 +103,7 @@ const MemberForm = (prop) => {
               />
                <Selecter
               Name="DOR"
-              Type="date"
+              Type="datetime-local"
               field="DOR"
               placeholder="Enter Date of Registration"
             />
@@ -132,7 +145,7 @@ const MemberForm = (prop) => {
               />
                 <Selecter
                 Name="DOJ"
-                Type="date"
+                Type="datetime-local"
                 field="DOJ"
                 placeholder="Enter Date of Joining"
               />
