@@ -26,6 +26,7 @@ import Profile from "../Auth/profile";
 import Reports from "../Members/Reports";
 import ProfileImg from "../Members/utility/profileImg";
 import EditTxn from "../Members/EditTransaction";
+import EditBranchName from "../branches/EditBranch";
 
 function Main() {
   const [Status, setStatus] = useState(false)
@@ -67,6 +68,7 @@ function Main() {
          <Route exact path="/profile/:username"><Profile User={Usr} /></Route>
          <Route exact path="/branches/show"> <ShowBranches User={Usr} /> </Route>
          <Route exact path="/branches/add" > <AddBranches User={Usr} /> </Route>
+         <Route exact path="/branches/branch-edit/:id" > <EditBranchName User={Usr}/> </Route>
          <Route exact path="/staff/view"><ViewStaff User={Usr} /></Route>
          <Route exact path="/staff/add"><AddStaff User={Usr}/></Route>
          <Route exact path="/member/view"><ViewMembers  User={Usr}/></Route>

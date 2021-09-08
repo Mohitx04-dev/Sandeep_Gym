@@ -195,3 +195,22 @@ exports.EditBranchPayment = (req, res)=>{
 
 
 
+exports.EditBranchName = (req, res,next)=>{
+    if(!req.body){
+        return res
+            .status(400)
+            .send({ message : "Data to update can not be empty"})
+    }
+    const id = req.params.Name;
+    Branchs.findOneAndUpdate({Name:id},{
+        Name : req.body.BranchName
+    }).then(data => {
+        if(!data){
+            res.status(404).send({ message : `Cannot Update Branch with ${id}. Maybe Branch not found!`})
+        }else{
+           next()
+        }
+    }).catch(err =>{
+        res.status(500).send({ message : "Error Update Branch information"})
+    })
+}

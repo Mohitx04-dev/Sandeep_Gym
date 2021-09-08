@@ -483,3 +483,15 @@ exports.getTxn = (req,res) =>{
     res.send("ERROR")
   })
 }
+
+
+exports.EditBranchNameforMembers = (req,res) => {
+  const id = req.params.Name;
+  Members.updateMany({"Branch": id},{
+      Branch : req.body.BranchName
+  }).then((data)=>{
+    res.send(data)
+  }).catch((e)=>{
+    res.send("ERROR")
+  })
+}

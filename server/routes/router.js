@@ -23,6 +23,8 @@ route.post('/api/branch', useAuth,
 checkRoleandPermissions(['createBranch']) , controller.createBranch);
 route.get('/api/branch', useAuth,
 checkRoleandPermissions(['showBranches']) ,controller.findBranch);
+route.put('/api/branch-edit/:Name', useAuth,
+checkRoleandPermissions(['showBranches']) ,controller.EditBranchName,member.EditBranchNameforMembers);
 // route.put('/api/branch/:Name', controller.updateBranch);
 route.get('/api/branch/:Name', useAuth,
 checkRoleandPermissions(['showBranches','showBranchTransaction']), controller.findBranchbyId);

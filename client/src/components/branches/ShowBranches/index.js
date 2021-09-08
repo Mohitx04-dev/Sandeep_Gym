@@ -5,6 +5,7 @@ import Landing from '../../main/Landing';
 import ErrorModal from '../../util/error-modal';
 import SuccessModal from '../../util/success-modal';
 import DeleteModal from '../../util/delete-modal';
+import { useHistory } from 'react-router-dom';
 
 export default function ShowBranches(props) {
     const [Branches, SetBranches] = useState([]);
@@ -30,11 +31,19 @@ export default function ShowBranches(props) {
      useEffect(() => {
                 getData();
     }, []);
+    let history = useHistory();
 
 function ShowBranchData(prop) {
+  const redirect = () => {
+    history.push('/branches/branch-edit/'+prop.mem.Name)
+  }
   return (
     <tr>
     <td>{prop.mem.Name}</td>
+    <td> <Button variant="warning" onClick={redirect}>
+      Edit
+     </Button>
+     </td>
     <td> <Button variant="danger" onClick={() => {setDeleteModalShow(true) 
       settoDelete(prop.mem.Name)}}>
       Delete
@@ -50,6 +59,7 @@ function ShowBranchData(prop) {
   <thead>
     <tr>
       <th>Name</th>
+      <th>Edit</th>
       <th>Delete</th>
     </tr>
   </thead>
