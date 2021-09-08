@@ -83,13 +83,13 @@ const MemberForm = (prop) => {
             <div className="col-md-3 col-sm-12 col-3">
               <Selecter
                 Name="Weight"
-                Type="number"
+                Type="text"
                 field="Weight"
                 placeholder="Enter Weight"
               />
               <Selecter
                 Name="Height"
-                Type="number"
+                Type="text"
                 field="Height"
                 placeholder="Enter Height"
               />
