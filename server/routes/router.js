@@ -12,7 +12,8 @@ const {
     userRegister,
     serializeUser,
     updateUser,
-    GetUserData
+    GetUserData,
+    EditBranchNameforUsers
   } = require("../utils/Auth");
   const { uploadImg,getImg,deleteImg} = require('../utils/image')
   
@@ -24,7 +25,7 @@ checkRoleandPermissions(['createBranch']) , controller.createBranch);
 route.get('/api/branch', useAuth,
 checkRoleandPermissions(['showBranches']) ,controller.findBranch);
 route.put('/api/branch-edit/:Name', useAuth,
-checkRoleandPermissions(['showBranches']) ,controller.EditBranchName,member.EditBranchNameforMembers);
+checkRoleandPermissions(['editBranch']) ,controller.EditBranchName,EditBranchNameforUsers,PT.EditBranchNameforPT,staff.EditBranchNameforEMP,member.EditBranchNameforMembers);
 // route.put('/api/branch/:Name', controller.updateBranch);
 route.get('/api/branch/:Name', useAuth,
 checkRoleandPermissions(['showBranches','showBranchTransaction']), controller.findBranchbyId);

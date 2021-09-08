@@ -486,7 +486,8 @@ exports.getTxn = (req,res) =>{
 
 
 exports.EditBranchNameforMembers = (req,res) => {
-  const id = req.params.Name;
+  var id = req.params.Name;
+  id = decodeURI(id)
   Members.updateMany({"Branch": id},{
       Branch : req.body.BranchName
   }).then((data)=>{

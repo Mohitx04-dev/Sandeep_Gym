@@ -201,7 +201,8 @@ exports.EditBranchName = (req, res,next)=>{
             .status(400)
             .send({ message : "Data to update can not be empty"})
     }
-    const id = req.params.Name;
+    var id = req.params.Name;
+    id = decodeURI(id)
     Branchs.findOneAndUpdate({Name:id},{
         Name : req.body.BranchName
     }).then(data => {

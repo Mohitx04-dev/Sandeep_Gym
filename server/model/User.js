@@ -26,6 +26,7 @@ var UserSchema  = new mongoose.Schema(
                 showBranches : Boolean,
                 createBranch : Boolean,
                 deleteBranches : Boolean,
+                editBranch : Boolean,
                 showBranchTransaction : Boolean,
                 AllBranches : Boolean,
                 AddBranchPayment : Boolean,

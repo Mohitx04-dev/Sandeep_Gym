@@ -191,6 +191,18 @@ const GetUserData = async (req,res) => {
   })
 }
 
+const EditBranchNameforUsers = (req,res,next) => {
+  var id = req.params.Name;
+  id = decodeURI(id)
+  User.updateMany({"branch": id},{
+      branch : req.body.BranchName
+  }).then((data)=>{
+    next()
+  }).catch((e)=>{
+    res.send("ERROR")
+  })
+}
+
 module.exports = {
   userAuth,
   checkRole,
@@ -198,5 +210,6 @@ module.exports = {
   userRegister,
   serializeUser,
   updateUser,
-  GetUserData
+  GetUserData,
+  EditBranchNameforUsers
 };

@@ -178,3 +178,14 @@ exports.findPTbyId = (req,res) => {
 
 
 
+exports.EditBranchNameforPT = (req,res,next) => {
+    var id = req.params.Name;
+    id = decodeURI(id)
+    PTs.updateMany({"Branch": id},{
+        Branch : req.body.BranchName
+    }).then((data)=>{
+      next()
+    }).catch((e)=>{
+      res.send("ERROR")
+    })
+  }

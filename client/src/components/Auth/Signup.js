@@ -16,6 +16,7 @@ function SignUp(props) {
         {showBranches : true,
         createBranch : false,
         deleteBranches : false,
+        editBranch : false,
         AllBranches : false,
         showEmployees : false,
         createEmployee : false,

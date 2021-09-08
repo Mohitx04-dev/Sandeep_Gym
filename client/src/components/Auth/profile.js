@@ -29,6 +29,7 @@ function Profile(props) {
         {showBranches : true,
         createBranch : false,
         deleteBranches : false,
+        editBranch : false,
         showBranchTransaction : false,
         AllBranches : false,
         showEmployees : false,

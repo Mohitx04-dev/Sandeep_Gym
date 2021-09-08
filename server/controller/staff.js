@@ -125,3 +125,16 @@ exports.deleteEmployee = (req, res)=>{
             })
         }
 }
+
+
+exports.EditBranchNameforEMP = (req,res,next) => {
+    var id = req.params.Name;
+    id = decodeURI(id)
+    Employees.updateMany({"Branch": id},{
+        Branch : req.body.BranchName
+    }).then((data)=>{
+      next()
+    }).catch((e)=>{
+      res.send("ERROR")
+    })
+  }
