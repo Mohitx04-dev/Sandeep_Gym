@@ -27,7 +27,7 @@ function BranchSelector(prop) {
             <Form.Control as="select" defaultValue={prop.Member ? prop.Member.Branch : prop.user ? prop.user.branch : null} >
               {
               Branches.map((br) => {
-                return <option key={br} value={br}>{br}</option>;
+                return <option key={br}  selected={(prop.Member && prop.Member.Branch==br) ? true : false} value={br}>{br}</option>;
               })
               }
             </Form.Control>

@@ -115,6 +115,7 @@ export default function Reports(props) {
                    e.preventDefault();
                    console.log(e.target[0].value);
                    var newArray = MemberFilter.filter(function (el) {
+                     console.log(el.Branch,e.target[0].value)
                     return el.Branch == e.target[0].value;
                   });
                   setMemberFilter(newArray);
