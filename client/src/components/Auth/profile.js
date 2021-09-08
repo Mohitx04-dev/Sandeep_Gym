@@ -80,15 +80,7 @@ function Profile(props) {
                 )
             }
             const handleOnChange = (name) => {
-              if(name=='payDue'||name=='extendMember'||name=='createMember') {
-                setpermissions(
-                    {...permissions,
-                      [name] : !permissions[name],
-                      AddBranchPayment:(permissions['AddBranchPayment'] ? true : !permissions[name])
-                    }
-                  );
-              }
-              else if(name=='updateMembers'||name=='deleteMember'||name=='extendMember'||name=='payDue') {
+              if(name=='updateMembers'||name=='deleteMember'||name=='extendMember'||name=='payDue') {
                 setpermissions(
                     {...permissions,
                       [name] : !permissions[name],
