@@ -179,6 +179,20 @@ const updateUser = async (user,req,res) => {
 }
 
 
+
+const deleteuser = async (req,res) => {
+  const id = req.params.username;
+  User.findOneAndDelete({username : id})
+  .then((data)=>{
+      if(!data) {
+        res.status(404).send("Failed")
+      }
+      else {
+        res.status(200).send("Deleted")
+      }
+  })
+}
+
 const GetUserData = async (req,res) => {
   User.findOne({username: req.params.username})
   .then((data)=>{
@@ -203,6 +217,24 @@ const EditBranchNameforUsers = (req,res,next) => {
   })
 }
 
+const findusers = (req, res) => {
+  User.find()
+        .then((user) => {
+          res.send(user);
+        })
+        .catch((err) => {
+          res
+            .status(500)
+            .send({
+              message:
+                err.message ||
+                "Error Occurred while retriving Member information",
+            });
+        });
+};
+
+
+
 module.exports = {
   userAuth,
   checkRole,
@@ -211,5 +243,7 @@ module.exports = {
   serializeUser,
   updateUser,
   GetUserData,
-  EditBranchNameforUsers
+  EditBranchNameforUsers,
+  deleteuser,
+  findusers
 };

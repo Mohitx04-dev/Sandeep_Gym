@@ -59,6 +59,7 @@ function Header() {
             }}>Logout</NavDropdown.Item> </>
           : <NavDropdown.Item href="/login">Login</NavDropdown.Item>}
           <NavDropdown.Item href="/register">SignUp</NavDropdown.Item>
+          <NavDropdown.Item href="/viewUser">View Users</NavDropdown.Item>
         </NavDropdown>
         {Status ? <Nav.Link id={styles.Drop} href="#">Role : {Status}</Nav.Link> : null}
       </Nav>
