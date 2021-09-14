@@ -55,8 +55,7 @@ function PayDue(props) {
       DueDate : event.target[8].value
     };
     const UpdateDue = {
-      Due: 0,
-      Paid: Paymentdt[0].Total,
+      Due: 0,      
       pay : pay,
       BranchName : Userdt.Branch,
       PayBr : {

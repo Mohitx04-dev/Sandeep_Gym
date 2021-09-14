@@ -329,7 +329,6 @@ exports.UpdateDue = (req, res,next) => {
             { Cust_Id: id, "Payment._id": txid },
             {        
               $set: {
-                "Payment.$.Paid": req.body.Paid,
                 "Payment.$.Due": req.body.Due,
               },
             }).then(()=>{
@@ -496,3 +495,27 @@ exports.EditBranchNameforMembers = (req,res) => {
     res.send("ERROR")
   })
 }
+
+
+exports.EditValidity = (req, res,next) => {
+  const id = req.params.id;
+  if (id) {
+    Members.findOneAndUpdate(
+      { Cust_Id: id },
+      {Valid_Till : req.body.Valid_Till },
+    )
+      .then((data) => {
+        if (!data) {
+          res
+            .status(404)
+            .send({
+              message: `Cannot Update Member with ${id}. Maybe Member not found!`,
+            });
+        } 
+        else {
+          res.status(200).send({
+            message : "Validity Succesfully Changed"
+          })
+        }
+  })
+}}

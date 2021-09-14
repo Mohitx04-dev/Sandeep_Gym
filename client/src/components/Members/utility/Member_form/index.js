@@ -2,6 +2,7 @@ import { Form } from "react-bootstrap";
 import React from "react";
 import PayField from "../PayUtil";
 import BranchSelector from "../BranchSelector";
+import toInputUppercase from "../../../util/Caps";
 
 function getFormattedDate(date) {
     date = new Date(date);
@@ -38,7 +39,7 @@ const MemberForm = (prop) => {
           return (
           <>
             <Form.Label>{props.Name}</Form.Label>
-            <Form.Control type={props.Type} defaultValue={prop.Member?Field :(props.def==0 ? props.def : null)} placeholder={props.placeholder} disabled={prop.Editable==false? true:false} />
+            <Form.Control type={props.Type} defaultValue={prop.Member?Field :(props.def==0 ? props.def : null)} placeholder={props.placeholder} disabled={prop.Editable==false? true:false}  onInput={toInputUppercase} />
           </>
         );
       }
@@ -114,6 +115,7 @@ const MemberForm = (prop) => {
                 as="textarea"
                 placeholder="Leave a comment here"
                 style={{ height: "100px" }}
+                onInput={toInputUppercase}
                 disabled={prop.Editable==false? true:false}
                 defaultValue={prop.Member? prop.Member.Address : null}
               />

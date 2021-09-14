@@ -3,6 +3,8 @@ import {Form,Button} from 'react-bootstrap'
 import axios from 'axios'
 import SuccessModal from '../../util/success-modal';
 import ErrorModal from '../../util/error-modal';
+import toInputUppercase from '../../util/Caps';
+
 export default function AddBranches(props) {
     const [BranchId,setBranchId] = useState(0);
     const [sucModalShow, setsucModalShow] = useState(false)
@@ -20,12 +22,12 @@ export default function AddBranches(props) {
             Payments: [],
             Total: 0
              };
+            console.log(article)
             await axios.post('/api/branch', article,{headers:headers})
              .then(async()=> await setsucModalShow(true))
             .catch((e)=>{
                 seterrModalShow(true)
             })
-           
     }
     console.log(sucModalShow)
     return (
@@ -33,7 +35,7 @@ export default function AddBranches(props) {
         <Form onSubmit={Sub}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Name of New Branch</Form.Label>
-            <Form.Control type="text" placeholder="Enter Name " />
+            <Form.Control type="text"  onInput={toInputUppercase}  placeholder="Enter Name " />
         </Form.Group>
         <SuccessModal show={sucModalShow} redirect={()=> window.location.href="/Branches/show"}
             onClose={()=>{

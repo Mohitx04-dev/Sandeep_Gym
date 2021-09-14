@@ -16,7 +16,7 @@ var schema = new mongoose.Schema({
         required: true
     },
     Height : {
-        type : Number,
+        type : String,
         required: true
     },
     Weight : {

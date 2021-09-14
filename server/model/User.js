@@ -39,6 +39,7 @@ var UserSchema  = new mongoose.Schema(
                 deleteMember : Boolean,
                 extendMember : Boolean,
                 editTxn : Boolean,
+                editValidity : Boolean,
                 payDue : Boolean,
                 createPT : Boolean,
                 showPT : Boolean,

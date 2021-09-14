@@ -4,6 +4,7 @@ import axios from 'axios'
 import BranchSelector from '../../Members/utility/BranchSelector';
 import ErrorModal from '../../util/error-modal';
 import SuccessModal from '../../util/success-modal';
+import toInputUppercase from '../../util/Caps';
 
 export default function AddStaff(props) {
     const headers = {
@@ -40,16 +41,16 @@ return (
     <Form onSubmit={onSubmit}>
     <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Name of Employee</Form.Label>
-        <Form.Control type="text" placeholder="Enter Name " />
+        <Form.Control type="text" placeholder="Enter Name "onInput={toInputUppercase}/>
         <BranchSelector User={props.User} />
         <Form.Label>Salary</Form.Label>
-        <Form.Control type="number" placeholder="Enter Salary " />
+        <Form.Control type="number" placeholder="Enter Salary "/>
         <Form.Label>Date of Joining</Form.Label>
-        <Form.Control type="date" placeholder="Enter DOJ " />
+        <Form.Control type="date" placeholder="Enter DOJ "/>
         <Form.Label>Aadhar</Form.Label>
-        <Form.Control type="number" placeholder="Enter Aadhar " />
+        <Form.Control type="number" placeholder="Enter Aadhar "/>
         <Form.Label>DOB</Form.Label>
-        <Form.Control type="date" placeholder="Enter DOB " />
+        <Form.Control type="date" placeholder="Enter DOB "/>
     </Form.Group>
     <Button variant="primary" type="submit">
         Submit

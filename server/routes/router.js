@@ -153,6 +153,12 @@ route.get(
 );
 route.put("/api/validateUp/", member.updateValidityUp);
 route.put("/api/validateDown/", member.updateValidityDown);
+route.put(
+  "/api/member-validity/:id/",
+  useAuth,
+  checkRoleandPermissions(["editValidity"]),
+  member.EditValidity
+);
 route.post(
   "/api/PT",
   useAuth,

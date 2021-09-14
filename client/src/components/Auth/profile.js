@@ -43,6 +43,7 @@ function Profile(props) {
         extendMember : false,
         payDue : false,
         editTxn : false,
+        editValidity : false,
         createPT : false,
         showPT : true,
         deletePT : false,

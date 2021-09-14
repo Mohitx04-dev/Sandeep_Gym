@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import toInputUppercase from "../../../util/Caps";
 
 function getFormattedDate(date) {
   date = new Date(date);
@@ -57,6 +58,7 @@ function PayField(prop) {
               ? payprop.isDue
               : false
           }
+          onInput={toInputUppercase}
         />
       </>
     );

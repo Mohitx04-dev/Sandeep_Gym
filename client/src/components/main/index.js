@@ -28,6 +28,7 @@ import ProfileImg from "../Members/utility/profileImg";
 import EditTxn from "../Members/EditTransaction";
 import EditBranchName from "../branches/EditBranch";
 import ViewUsers from "../Auth/viewUser";
+import EditValidity from "../Members/EditValidity";
 
 function Main() {
   const [Status, setStatus] = useState(false)
@@ -65,14 +66,15 @@ function Main() {
          <Route exact path="/PT/add"><AddPT User={Usr}/></Route>
          <Route exact path="/PT/view"><ViewPT User={Usr} /> </Route>
          <Route exact path="/PT/update/:id"><UpdatePT User={Usr} /> </Route>
-         <Route exact path="/register"><SignUp User={Usr} /></Route>
-         <Route exact path="/profile/:username"><Profile User={Usr} /></Route>
+         <Route exact path="/register"> {Status==='superadmin' ?  <SignUp User={Usr} /> : <Landing/>}</Route>
+         <Route exact path="/profile/:username"> {Status==='superadmin' ?  <Profile User={Usr} /> : <Landing/>}</Route>
+         <Route exact path="/viewUser/">{Status==='superadmin' ? <ViewUsers User={Usr}/> : <Landing/>}</Route>
          <Route exact path="/branches/show"> <ShowBranches User={Usr} /> </Route>
          <Route exact path="/branches/add" > <AddBranches User={Usr} /> </Route>
          <Route exact path="/branches/branch-edit/:id" > <EditBranchName User={Usr}/> </Route>
          <Route exact path="/staff/view"><ViewStaff User={Usr} /></Route>
          <Route exact path="/staff/add"><AddStaff User={Usr}/></Route>
-         <Route exact path="/member/view"><ViewMembers  User={Usr}/></Route>
+         <Route exact path="/member/view"><ViewMembers  User={Usr} Status={Status}/></Route>
          <Route exact path="/member/reports"><Reports  User={Usr}/></Route>
          <Route exact path="/member/add"><AddMember  User={Usr}/></Route>
          <Route exact path="/member/:id"><MemberPg  User={Usr}/></Route>
@@ -88,7 +90,7 @@ function Main() {
          </Route>
          <Route exact path="/PayDue/:id/:txid"><PayDue User={Usr} /></Route>
          <Route exact path="/Edit/:id/:txid"><EditTxn User={Usr} /></Route>
-         <Route exact path="/viewUser/"><ViewUsers User={Usr}/></Route>
+         <Route exact path="/EditValidity/:id/"><EditValidity User={Usr} /></Route>
          </Switch>
        : <Signin />
       }

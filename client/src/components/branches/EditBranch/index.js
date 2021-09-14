@@ -3,6 +3,7 @@ import {Form,Button} from 'react-bootstrap'
 import axios from 'axios'
 import SuccessModal from '../../util/success-modal';
 import ErrorModal from '../../util/error-modal';
+import toInputUppercase from '../../util/Caps';
 export default function EditBranchName(props) {
     const [sucModalShow, setsucModalShow] = useState(false)
     const [errModalShow, seterrModalShow] = useState(false)
@@ -32,7 +33,7 @@ export default function EditBranchName(props) {
         <Form onSubmit={Sub}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Name of Branch</Form.Label>
-            <Form.Control type="text" placeholder="Enter Name" defaultValue={mid} />
+            <Form.Control type="text"  onInput={toInputUppercase} placeholder="Enter Name" defaultValue={mid} />
         </Form.Group>
         <SuccessModal show={sucModalShow} redirect={()=> window.location.href="/Branches/show"}
             onClose={()=>{

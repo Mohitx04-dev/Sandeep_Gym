@@ -5,6 +5,7 @@ import Timestamp from 'react-timestamp';
 import { Link } from 'react-router-dom';
 import DeleteModal from '../../util/delete-modal';
 import dateFormat from 'dateformat';
+import toInputUppercase from '../../util/Caps';
 
 
 
@@ -85,7 +86,7 @@ export default function ViewMembers(props) {
               }}
             >
               <Form.Label>Enter Name</Form.Label>
-              <Form.Control type="text" placholder="Enter Name" />
+              <Form.Control type="text" placholder="Enter Name"  onInput={toInputUppercase}/>
               <Button className="p-2 my-2" variant="primary" type="submit">
               Filter
               </Button>
@@ -101,7 +102,7 @@ export default function ViewMembers(props) {
               }}
             >
               <Form.Label>Enter Phone Id</Form.Label>
-              <Form.Control type="number" placholder="Enter Name" />
+              <Form.Control type="number"  onInput={toInputUppercase} placholder="Enter Phone" />
               <Button className="p-2 my-2" variant="primary" type="submit">
               Filter
               </Button>
@@ -115,6 +116,7 @@ export default function ViewMembers(props) {
       <th>DOJ</th>
       <th>Branch</th>
       <th>Valid Till</th>
+      {props.Status=='superadmin' ? <th>Valid Till</th> : null}
       <th>Extend Validity</th>
       <th>View</th>
       <th>Update</th>
@@ -132,6 +134,9 @@ export default function ViewMembers(props) {
         <td><Timestamp date={mem.DOJ}/></td>
         <td>{mem.Branch}</td>
         <td>{mem.Active ?<Timestamp date={mem.Valid_Till} />: <p className="text-danger font-weight-bold">Expired on <Timestamp date={mem.Valid_Till} /></p>} </td>
+        {props.Status=='superadmin' ? <td>
+        <Link to={"/EditValidity/"+mem.Cust_Id} className="btn btn-info">Edit</Link>
+        </td> : null}
         <td>
              <Link to={"/member/extend/"+mem.Cust_Id + "/" + (!mem.Active ? "Renew" : '')} className={" btn " + (mem.Active ?  " btn-success " : " btn-danger ")}>{mem.Active ? "Extend" : "Renew"}</Link></td>
              <td>

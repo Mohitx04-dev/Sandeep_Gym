@@ -6,6 +6,7 @@ import dateFormat from "dateformat";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import toInputUppercase from "../../util/Caps";
 
 function ShowSales(props) {
   const headers = {
@@ -50,7 +51,7 @@ function ShowSales(props) {
               }}
             >
               <Form.Label>Enter ID</Form.Label>
-              <Form.Control type="text" placholder="Enter Id of Member" />
+              <Form.Control type="text"  onInput={toInputUppercase} placholder="Enter Id of Member" />
               <Button className="p-2 my-2" variant="primary" type="submit">
                 Filter
               </Button>

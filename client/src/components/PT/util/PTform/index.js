@@ -1,13 +1,14 @@
 import React from 'react'
 import {Form, Button} from 'react-bootstrap'
 import BranchSelector from '../../../Members/utility/BranchSelector'
+import toInputUppercase from '../../../util/Caps'
 
 function PTform(prop) {
     function Sinput(props) {
         return (
             <>
             <Form.Label>{props.Title}</Form.Label>
-            <Form.Control type={props.Type} defaultValue={props.Val ? props.Val : null} placeholder={props.PlaceHolder} disabled={props.EditF ? props.EditF : false} />
+            <Form.Control type={props.Type} defaultValue={props.Val ? props.Val : null} placeholder={props.PlaceHolder} disabled={props.EditF ? props.EditF : false}  onInput={toInputUppercase}/>
             </>
         )
     }
