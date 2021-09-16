@@ -1,7 +1,5 @@
 import React, { useState , useEffect} from "react";
 import { Switch, Route,Router } from "react-router-dom";
-import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-
 import AddBranches from "../branches/AddBranches";
 import ShowBranches from "../branches/ShowBranches";
 import AddMember from "../Members/NewMember";

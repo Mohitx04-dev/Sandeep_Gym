@@ -3,6 +3,7 @@ import {Form, Button} from 'react-bootstrap'
 import axios from 'axios'
 import SuccessModal from '../util/success-modal'
 import ErrorModal from '../util/error-modal'
+import toLowerCase from '../util/Small'
 
 function Signin() {
     const [sucModalShow, setsucModalShow] = useState(false)
@@ -46,14 +47,14 @@ function Signin() {
         return (
             <>
             <Form.Label>{props.Title}</Form.Label>
-            <Form.Control type={props.Type} placeholder={props.PlaceHolder} />
+            <Form.Control type={props.Type} placeholder={props.PlaceHolder} onInput={toLowerCase?toLowerCase:null}  />
             </>
         )
     }
     return (
         <div>
            <Form onSubmit={onSubmit}>
-            <Sinput Title="Username" Type="text" Placeholder="Enter Username"/>
+            <Sinput Title="Username" Type="text" Placeholder="Enter Username" toLowerCase={true} />
             <Form.Group className="mb-3" controlId="formBasicPassword">
             <Sinput Title="Password" Type="password" Placeholder="Enter password"/>
             </Form.Group>

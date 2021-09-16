@@ -4,6 +4,7 @@ import axios from 'axios'
 import BranchSelector from '../Members/utility/BranchSelector';
 import SuccessModal from '../util/success-modal';
 import ErrorModal from '../util/error-modal';
+import toLowerCase from '../util/Small';
 
 function SignUp(props) {
     const [sucModalShow, setsucModalShow] = useState(false)
@@ -65,7 +66,7 @@ const Reg = async (e) => {
         return (
             <>
             <Form.Label>{props.Title}</Form.Label>
-            <Form.Control type={props.Type} placeholder={props.PlaceHolder} />
+            <Form.Control type={props.Type} placeholder={props.PlaceHolder} onInput={toLowerCase?toLowerCase:null} />
             </>
         )
     }
@@ -100,7 +101,7 @@ const Reg = async (e) => {
             <Sinput Title="Password" Type="password" Placeholder="Enter password"/>
             </Form.Group>
             <Sinput Title="Name" Type="text" Placeholder="Enter Name"/>
-            <Sinput Title="Username" Type="text" Placeholder="Enter Username"/>
+            <Sinput Title="Username" Type="text" Placeholder="Enter Username"  toLowerCase={true} />
             <Form.Label>Role</Form.Label>
             <Form.Control as='select' >
             <option value="user">User</option>

@@ -4,6 +4,7 @@ import axios from 'axios'
 import BranchSelector from '../Members/utility/BranchSelector';
 import SuccessModal from '../util/success-modal';
 import ErrorModal from '../util/error-modal';
+import toLowerCase from '../util/Small';
 function Profile(props) {
     const [sucModalShow, setsucModalShow] = useState(false)
     const [errModalShow, seterrModalShow] = useState(false)
@@ -12,19 +13,11 @@ function Profile(props) {
         'Content-Type': 'application/json',
         'Authorization': props.User.token
       }
+
       var Uid = window.location.pathname.split("/");
       Uid = Uid[2];
       const [User, setUser] = useState()
-      useEffect(() => {
-          axios.get('/api/userprofile/'+Uid,{headers:headers})
-            .then((data)=>{
-                console.log(data)
-                setUser(data.data)
-            })
-            .catch((e)=>{
-                console.log(e)
-            })
-      }, [])
+
       const [permissions, setpermissions] = useState(
         {showBranches : true,
         createBranch : false,
@@ -49,6 +42,19 @@ function Profile(props) {
         deletePT : false,
         updatePT : false,
         createAccount : false})
+
+      useEffect(() => {
+          axios.get('/api/userprofile/'+Uid,{headers:headers})
+            .then((data)=>{
+                console.log(data)
+                setUser(data.data)
+                setpermissions(data.data.permissions)
+            })
+            .catch((e)=>{
+                console.log(e)
+            })
+      }, [])
+ 
         const Reg = async (e) => {   
             e.preventDefault()     
                 const Article = {
@@ -76,7 +82,7 @@ function Profile(props) {
                 return (
                     <>
                     <Form.Label>{props.Title}</Form.Label>
-                    <Form.Control type={props.Type} placeholder={props.PlaceHolder} defaultValue={User ? User[props.field] :null} />
+                    <Form.Control type={props.Type} placeholder={props.PlaceHolder} defaultValue={User ? User[props.field] :null} onInput={toLowerCase?toLowerCase:null} />
                     </>
                 )
             }
@@ -107,7 +113,7 @@ function Profile(props) {
                         </Form.Text>
                     </Form.Group>
                     <Sinput Title="Name" Type="text" Placeholder="Enter Name" field="name"/>
-                    <Sinput Title="Username" Type="text" Placeholder="Enter Username" field="username"/>
+                    <Sinput Title="Username" Type="text" Placeholder="Enter Username" toLowerCase={true} field="username"/>
                     <BranchSelector User = {props.User} user={User}/> 
                     <h6 className="my-2">Permissions</h6>
                     {Object.keys(permissions).map((name) => 

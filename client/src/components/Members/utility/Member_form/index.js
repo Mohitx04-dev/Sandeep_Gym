@@ -30,7 +30,7 @@ const MemberForm = (prop) => {
             Field = getFormattedDate(prop.Member[Field]);
         }
         else if(props.Type=='datetime-local') {
-          Field = getFormattedDateTime(prop.Member[Field]);
+            Field = getFormattedDateTime(prop.Member[Field]);
         }
         else {
             Field = prop.Member[Field];

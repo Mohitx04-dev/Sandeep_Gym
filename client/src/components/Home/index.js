@@ -2,6 +2,7 @@ import React from 'react'
 import BranchSelector from "../Members/utility/BranchSelector";
 import {Form,Button} from 'react-bootstrap'
 import Search from './util/search';
+import toLowerCase from '../util/Small';
 function Home(props) {
     return (
         
@@ -26,7 +27,7 @@ function Home(props) {
                 window.location.href="/profile/"+e.target[0].value
             })}>
                <Form.Label>Enter Username</Form.Label>
-            <Form.Control type="text" placholder="Enter Username of Member"  />
+            <Form.Control type="text" placholder="Enter Username of Member" onInput={toLowerCase}/>
               <Button  className="p-2 my-2"  variant="primary" type="submit">
                 Submit
               </Button>

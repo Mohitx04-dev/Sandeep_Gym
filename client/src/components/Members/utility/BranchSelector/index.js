@@ -17,17 +17,17 @@ function BranchSelector(prop) {
                 setBranches((state) => [...state, response.data[i].Name]);
                 } 
     });
-    }
+}
     useEffect(() => {
     getData();
     }, []);
         return (
             <>
             <Form.Label className="Font">Name of Branch</Form.Label>
-            <Form.Control as="select" defaultValue={prop.Member ? prop.Member.Branch : prop.user ? prop.user.branch : null} >
+            <Form.Control as="select" defaultValue={prop.Member ? prop.Member.Branch : (prop.user ? prop.user.branch : null)} >
               {
               Branches.map((br) => {
-                return <option key={br}  selected={(prop.Member && prop.Member.Branch==br) ? true : false} value={br}>{br}</option>;
+                return <option key={br}  selected={(prop.Member && prop.Member.Branch==br)||(prop.user && prop.user.branch==br) ? true : false} value={br}>{br}</option>;
               })
               }
             </Form.Control>

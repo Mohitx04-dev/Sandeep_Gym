@@ -7,8 +7,6 @@ import DeleteModal from '../../util/delete-modal';
 import dateFormat from 'dateformat';
 import toInputUppercase from '../../util/Caps';
 
-
-
 export default function ViewMembers(props) {
 
     const [Member, setMember] = useState([]);

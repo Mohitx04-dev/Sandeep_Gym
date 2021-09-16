@@ -14,7 +14,7 @@ function ShowSales(props) {
     Authorization: props.User.token,
     branch: props.User.branch,
   };
-  var Total = 0;
+  const [Total, setTotal] = useState(0)
   var Bid = window.location.pathname.split("/");
   Bid = Bid[2];
   const [Branches, SetBranches] = useState([]);
@@ -35,6 +35,12 @@ function ShowSales(props) {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    for(var i=0; i<Filter.length; i++) {
+      setTotal(Total + parseInt(Filter[i].Amount))
+    }
+  }, [Filter])
 
   return (
     <div>
@@ -103,8 +109,14 @@ function ShowSales(props) {
           </tr>
         </thead>
         <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{Total}</td>
+          </tr>
           {Filter.map((p) => {
-            Total += parseInt(p.Amount);
+            // Total += parseInt(p.Amount);
             return (
               <tr key={p._id}>
                 <td>{p.Cust_Id}</td>
@@ -117,12 +129,6 @@ function ShowSales(props) {
               </tr>
             );
           })}
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{Total}</td>
-          </tr>
         </tbody>
       </Table>
     </div>
