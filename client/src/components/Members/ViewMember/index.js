@@ -124,7 +124,6 @@ export default function ViewMembers(props) {
   <tbody>
   {Member.map(mem=>{
     if(getMembers(mem) || (CurrentBranch==null)) {
-      console.log(mem.Contact_No)
       return(
         <tr key={mem.Cust_Id}>
         <td>{mem.Cust_Id}</td>

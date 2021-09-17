@@ -9,16 +9,31 @@ function getFormattedDate(date) {
   var year = date.getFullYear();
   return year + "-" + month + "-" + day;
 }
-function getFormattedDateTime(date) {
-  date = new Date(date);
-  var day = ('0' + date.getDate()).slice(-2);
-  var month = ('0' + (date.getMonth() + 1)).slice(-2);
+function getTime(date){
+  var date = new Date(date);
+  
   var year = date.getFullYear();
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var seconds = date.getSeconds();
-  console.log(hours,minutes,seconds)
-  return year + '-' + month + '-' + day +'T' + hours +':'+minutes+':'+((seconds===0)? '00' : seconds);
+  var month = (date.getMonth() +1);
+  var day = date.getDate();
+  
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  
+  return formateTime(year, month, day, hour, minute, second);
+}
+
+function formateTime(year, month, day, hour, minute, second){
+  return makeDoubleDigit(year) + "-" + 
+         makeDoubleDigit(month) + "-" + 
+         makeDoubleDigit(day) + "T" + 
+         makeDoubleDigit(hour) + ":" + 
+         makeDoubleDigit(minute) + ":" + 
+         makeDoubleDigit(second);
+}
+
+function makeDoubleDigit(x){
+  return (x < 10) ? "0" + x : x;
 }
 function PayField(prop) {
   var Pay;
@@ -41,7 +56,7 @@ function PayField(prop) {
           type={payprop.Type}
           defaultValue={
             (prop.Member && payprop.Type == "datetime-local")
-              ? getFormattedDateTime(payprop.Pay[payprop.field])
+              ? getTime(payprop.Pay[payprop.field])
               : prop.Member
               ? payprop.Pay[payprop.field]
               : payprop.isDue
