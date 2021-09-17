@@ -46,7 +46,7 @@ function PayDue(props) {
   const onSubmit = async (event) => {
     event.preventDefault();
     const pay = {
-      Date: event.target[2].value,
+      Date: new Date(event.target[2].value.valueOf()),
       Total: event.target[3].value,
       Paid: event.target[4].value,
       Due: event.target[5].value,
@@ -59,7 +59,7 @@ function PayDue(props) {
       pay : pay,
       BranchName : Userdt.Branch,
       PayBr : {
-        Date: event.target[2].value,
+        Date: new Date(event.target[2].value.valueOf()),
         Customer_Name: Userdt.Name,
         Amount: event.target[4].value,
         Cust_Id: Userdt.Cust_Id,

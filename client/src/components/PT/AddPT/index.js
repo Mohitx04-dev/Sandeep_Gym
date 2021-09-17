@@ -18,8 +18,8 @@ function AddPT(props) {
             Cust_Id : event.target[1].value,
             Branch : event.target[2].value,
             Trainer : event.target[3].value,
-            StartDate : event.target[4].value,
-            EndDate: event.target[5].value,
+            StartDate : new Date(event.target[4].value.valueOf()),
+            EndDate: new Date(event.target[5].value.valueOf()),
             Fees : event.target[6].value
         }
         var url = '/api/PT'

@@ -78,7 +78,7 @@ export default function AddMember(props) {
       Time: e.target[23].value,
       BranchName: e.target[2].value,
       PayBr: {
-        Date: e.target[24].value,
+        Date: new Date(e.target[24].value.valueOf()),
         Customer_Name: e.target[1].value,
         Amount: e.target[26].value,
         Cust_Id: e.target[0].value,

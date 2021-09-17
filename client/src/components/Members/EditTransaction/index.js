@@ -38,7 +38,7 @@ function EditTxn(props) {
   const sub = (e) => {
     e.preventDefault();
     var Article = {
-        Date: e.target[0].value,
+        Date: new Date(e.target[0].value.valueOf()),
         Total: e.target[1].value,
         Paid: e.target[2].value,
         Due: e.target[3].value,
@@ -48,7 +48,7 @@ function EditTxn(props) {
         Customer_Name: Userdt.Name,
         Amount: e.target[2].value,
         Cust_Id: Userdt.Cust_Id,
-        DueDate : e.target[6].value
+        DueDate : new Date(e.target[6].value.valueOf())
     };
     console.log(Article)
     axios

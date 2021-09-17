@@ -21,9 +21,9 @@ export default function AddStaff(props) {
         Name: e.target[0].value,
         Branch: e.target[1].value,
         Salary: e.target[2].value,
-        DOJ: e.target[3].value,
+        DOJ: new Date(e.target[3].value.valueOf()),
         Aadhar_No: e.target[4].value,
-        DOB : e.target[5].value,
+        DOB : new Date(e.target[5].value.valueOf()),
          };
         axios.post('/api/staff', article,{headers:headers})
             .then(response => setStaffId(response.data.id)).then(()=>{

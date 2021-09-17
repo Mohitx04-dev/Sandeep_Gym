@@ -57,7 +57,7 @@ function Extend (props) {
         Validity = addDays(Validity, Days);
         console.log(Validity)
         var Article = {
-            Pay : {Date : e.target[4].value,
+            Pay : {Date : new Date(e.target[4].value.valueOf()),
                 Total : e.target[5].value,
                 Paid : e.target[6].value,
                 Due : e.target[7].value,
@@ -68,7 +68,7 @@ function Extend (props) {
             Valid_Till : Validity,
             BranchName : Userdt.Branch,
             PayBr : {
-                Date:  e.target[4].value,
+                Date:  new Date(e.target[4].value.valueOf()),
                 Customer_Name : Userdt.Name,
                 Amount : e.target[6].value,
                 Cust_Id : Userdt.Cust_Id

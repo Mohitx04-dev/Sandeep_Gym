@@ -10,17 +10,22 @@ function getFormattedDate(date) {
   return year + "-" + month + "-" + day;
 }
 function getTime(date){
-  var date = new Date(date);
+  if(date==null) {
+    return null
+  } 
+  else {
+    var date = new Date(date);
   
-  var year = date.getFullYear();
-  var month = (date.getMonth() +1);
-  var day = date.getDate();
-  
-  var hour = date.getHours();
-  var minute = date.getMinutes();
-  var second = date.getSeconds();
-  
-  return formateTime(year, month, day, hour, minute, second);
+    var year = date.getFullYear();
+    var month = (date.getMonth() +1);
+    var day = date.getDate();
+    
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    
+    return formateTime(year, month, day, hour, minute, second);
+  }
 }
 
 function formateTime(year, month, day, hour, minute, second){
