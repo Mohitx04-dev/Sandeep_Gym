@@ -94,6 +94,18 @@ route.get(
   checkRoleandPermissions(["showMembers"]),
   member.findMember
 );
+route.post(
+  "/api/memberByPage",
+  useAuth,
+  checkRoleandPermissions(["showMembers"]),
+  member.Pagination
+);
+route.post(
+  "/api/MemberCount/:id",
+  useAuth,
+  checkRoleandPermissions(["showMembers"]),
+  member.GetCount
+);
 route.get(
   "/api/findMember/:branch/",
   useAuth,

@@ -34,7 +34,7 @@ export default function AddMember(props) {
     e.preventDefault();
     var Arr = [];
     const Pay = {
-      Date: e.target[24].value,
+      Date: new Date(e.target[24].value.valueOf()),
       Total: e.target[25].value,
       Paid: e.target[26].value,
       Due: e.target[27].value,

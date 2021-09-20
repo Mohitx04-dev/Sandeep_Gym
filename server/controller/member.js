@@ -519,3 +519,132 @@ exports.EditValidity = (req, res,next) => {
         }
   })
 }}
+
+
+exports.Pagination = (req,res)=>{
+  const pagination = req.body.pagination ? parseInt(req.body.pagination) : 10;
+  //PageNumber From which Page to Start 
+  const pageNumber = req.body.page ? parseInt(req.body.page) : 1;
+  var qc;
+  if(req.body.Name) {
+    Members.find({Name : { "$regex": req.body.Name, "$options": "i" } })
+    //skip takes argument to skip number of entries 
+    .skip((pageNumber - 1) * pagination)
+    //limit is number of Records we want to display
+    .limit(pagination)
+    .then(data => {
+        res.status(200).send({
+            "users": data
+        })
+    })
+    .catch(err => {
+        res.status(400).send({
+            "err": err
+        })
+    })
+  } else if(req.body.PhoneId) {
+    Members.find({Contact_No : req.body.PhoneId})
+    //skip takes argument to skip number of entries 
+    .skip((pageNumber - 1) * pagination)
+    //limit is number of Records we want to display
+    .limit(pagination)
+    .then(data => {
+        res.status(200).send({
+            "users": data
+        })
+    })
+    .catch(err => {
+        res.status(400).send({
+            "err": err
+        })
+    })
+  } else if(req.body.Valid_Till) {
+    Members.find({Valid_Till : {"$lt":req.body.Valid_Till}})
+    //skip takes argument to skip number of entries 
+    .skip((pageNumber - 1) * pagination)
+    //limit is number of Records we want to display
+    .limit(pagination)
+    .then(data => {
+        res.status(200).send({
+            "users": data
+        })
+    })
+    .catch(err => {
+        res.status(400).send({
+            "err": err
+        })
+    })
+  } else {
+    Members.find({})
+    //skip takes argument to skip number of entries 
+    .skip((pageNumber - 1) * pagination)
+    //limit is number of Records we want to display
+    .limit(pagination)
+    .then(data => {
+        res.status(200).send({
+            "users": data
+        })
+    })
+    .catch(err => {
+        res.status(400).send({
+            "err": err
+        })
+    })
+  }
+}
+
+exports.GetCount = (req,res)=>{
+  if(req.body.Name) {
+    Members.find({Name : { "$regex": req.body.Name, "$options": "i" } })
+    .count()
+    .then(data => {
+      res.status(200).send({
+          "cnt" : data
+      })
+  })
+  .catch(err => {
+     res.status(400).send({
+         "err" : err
+     })
+  })
+  } else if(req.body.PhoneId) {
+    Members.find({Contact_No : req.body.PhoneId})
+    .count()
+    .then(data => {
+      res.status(200).send({
+          "cnt" : data
+      })
+  })
+  .catch(err => {
+     res.status(400).send({
+         "err" : err
+     })
+  })
+  } else if(req.body.Valid_Till) {
+    Members.find({Valid_Till : {"$lt":req.body.Valid_Till}})
+    .count()
+      .then(data => {
+        res.status(200).send({
+            "cnt" : data
+        })
+    })
+    .catch(err => {
+       res.status(400).send({
+           "err" : err
+       })
+    })
+  } else {
+   Members.find({})
+      .count()
+      .then(data => {
+        res.status(200).send({
+            "cnt" : data
+        })
+    })
+    .catch(err => {
+       res.status(400).send({
+           "err" : err
+       })
+    })
+  }
+}

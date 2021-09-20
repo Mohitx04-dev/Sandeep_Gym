@@ -27,6 +27,7 @@ import EditTxn from "../Members/EditTransaction";
 import EditBranchName from "../branches/EditBranch";
 import ViewUsers from "../Auth/viewUser";
 import EditValidity from "../Members/EditValidity";
+import ViewMembersPaginated from "../Members/ViewMember/paginated";
 
 function Main() {
   const [Status, setStatus] = useState(false)
@@ -72,7 +73,8 @@ function Main() {
          <Route exact path="/branches/branch-edit/:id" > <EditBranchName User={Usr}/> </Route>
          <Route exact path="/staff/view"><ViewStaff User={Usr} /></Route>
          <Route exact path="/staff/add"><AddStaff User={Usr}/></Route>
-         <Route exact path="/member/view"><ViewMembers  User={Usr} Status={Status}/></Route>
+         {/* <Route exact path="/member/view"><ViewMembers  User={Usr} Status={Status}/></Route> */}
+         <Route exact path="/member/view"><ViewMembersPaginated  User={Usr} Status={Status}/></Route>
          <Route exact path="/member/reports"><Reports  User={Usr}/></Route>
          <Route exact path="/member/add"><AddMember  User={Usr}/></Route>
          <Route exact path="/member/:id"><MemberPg  User={Usr}/></Route>
