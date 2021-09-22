@@ -16,6 +16,7 @@ export default function Reports(props) {
     
     const [Member, setMember] = useState([]);
     const [MemberFilter,setMemberFilter] = useState([])
+    const [MemberFilter2,setMemberFilter2] = useState([])
     const [Branch, setBranch] = useState([])
     const [CurrentBranch, setCurrentBranch] = useState()
     const [modalShow, setModalShow] = useState(false);
@@ -49,6 +50,7 @@ export default function Reports(props) {
             for (var i = 0; i < response.data.length; i++) {
                 setMember(state => [...state, response.data[i]])
                 setMemberFilter(state => [...state, response.data[i]])
+                setMemberFilter2(state => [...state, response.data[i]])
             }
             });
       })
@@ -85,7 +87,7 @@ export default function Reports(props) {
                    e.preventDefault();
                    console.log(startDate._d,endDate._d)
                    var newArray = Member.filter(function (el) {
-                     var current_date = dateFormat(el.Valid_Till, "isoDate");
+                     var current_date = dateFormat(el.Valid_Till, "isoDate"); 
                      var sd = dateFormat(startDate._d, "isoDate");
                      var ed = dateFormat(endDate._d, "isoDate");
                      return( current_date <= ed && current_date >=sd);
@@ -101,7 +103,7 @@ export default function Reports(props) {
                     onDatesChange={({ startDate, endDate }) => {
                       setMemberFilter(Member)
                       setstartDate(startDate)
-                       setendDate(endDate)}} // PropTypes.func.isRequired,
+                      setendDate(endDate)}} // PropTypes.func.isRequired,
                     focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                     onFocusChange={focusedInput => setfocusedInput(focusedInput)} // PropTypes.func.isRequired,
                     isOutsideRange={() => false}
@@ -151,7 +153,7 @@ export default function Reports(props) {
    </Table>
    </div>
  : <div>
-                 <Form
+                 {/* <Form
                  onSubmit={(e) => {
                    e.preventDefault();
                    console.log(startDate._d,endDate._d)
@@ -162,7 +164,7 @@ export default function Reports(props) {
                      var ed = dateFormat(endDate._d, "isoDate");
                      return( current_date <= ed && current_date >=sd);
                    });
-                   setMemberFilter(newArray);
+                   setMemberFilter2(newArray);
                  }}
                >
                  <DateRangePicker
@@ -171,7 +173,7 @@ export default function Reports(props) {
                     endDate={endDate} // momentPropTypes.momentObj or null,
                     endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
                     onDatesChange={({ startDate, endDate }) => {
-                      setMemberFilter(Member)
+                      setMemberFilter2(Member)
                       setstartDate(startDate)
                        setendDate(endDate)}} // PropTypes.func.isRequired,
                     focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
@@ -181,7 +183,7 @@ export default function Reports(props) {
                  <Button className="p-2 my-2" variant="primary" type="submit">
                  Filter
                  </Button>
-               </Form>
+               </Form> */}
               <Form
                  onSubmit={(e) => {
                    e.preventDefault();
@@ -189,7 +191,7 @@ export default function Reports(props) {
                    var newArray = MemberFilter.filter(function (el) {
                     return el.Branch == e.target[0].value;
                   });
-                  setMemberFilter(newArray);
+                  setMemberFilter2(newArray);
                  }}
                >
                  <BranchSelector User={props.User} />
@@ -208,12 +210,9 @@ export default function Reports(props) {
      </thead>
      <tbody>
      {
-     MemberFilter.map(mem=>{
+     MemberFilter2.map(mem=>{
       var due=0;
       var dueDate;
-      if(mem.Payment[mem.Payment.length-1]['DueDate']) {
-        dueDate = mem.Payment[mem.Payment.length-1]['DueDate'];
-      }
       for(var x=0; x<mem.Payment.length; x++) {
           var temp = mem.Payment[x].Due;
           due += parseFloat(temp)
@@ -221,7 +220,11 @@ export default function Reports(props) {
       if(due==0) {
          return null
       }
-      else {
+      else if(due>0){
+        if(mem.Payment[mem.Payment.length-1]['DueDate']) {
+          dueDate = mem.Payment[mem.Payment.length-1]['DueDate'];
+        }
+        console.log(mem.Name)
          return(
              <tr key={mem.Cust_Id}>
              <td>{mem.Cust_Id}</td>
@@ -231,6 +234,9 @@ export default function Reports(props) {
            </tr>
            
            )
+      }
+      else {
+        return null
       }
      
 })
