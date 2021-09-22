@@ -17,10 +17,9 @@ const {
   deleteuser,
   findusers,
 } = require("../utils/Auth");
-const { uploadImg, getImg, deleteImg } = require("../utils/image");
 
+const Img = require('../utils/image')
 const { useAuth, checkRoleandPermissions } = require("../utils/UserAuth");
-const upload = require("..//middleware/upload");
 // API
 route.post(
   "/api/branch",
@@ -196,6 +195,8 @@ route.delete(
   checkRoleandPermissions(["deletePT"]),
   PT.deletePT
 );
+
+// route.post("/api/upload-img",Img.upload.single('photo'),Img.UploadImg);
 
 // Users Registeration Route
 route.post(

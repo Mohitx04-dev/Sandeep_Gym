@@ -1,41 +1,30 @@
-let gfs;
+
 const mongoose = require("mongoose");
-const Grid = require('gridfs-stream')
+const multer = require('multer');
+fs = require('fs');
 const conn = mongoose.connection;
-conn.once("open", function () {
-    gfs = new Grid(conn.db, mongoose.mongo);
-    gfs.collection("photos");
+
+var storage = multer.diskStorage({
+    destination: __dirname + '/uploads/images'
+  })
+var upload = multer({ storage: storage })
+const UploadImg = ((req, res) => {
+    var img = fs.readFileSync(req.file.path);
+    var encode_image = img.toString('base64');
+    // Define a JSONobject for the image attributes for saving to database
+    var finalImg = {
+         contentType: req.file.mimetype,
+         image:  new Buffer(encode_image, 'base64')
+      };
+     conn.db.collection('Images').insertOne(finalImg, (err, result) => {
+       if (err) return console.log(err)
+       console.log('saved to database')
+     })
 });
 
-const uploadImg = async (req,res) => {
-    if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `http://localhost:3000/api/file/${req.file.filename}`;
-    return res.send(imgUrl);
-}
+const getImg = ((req,res)=>{
+    var url = req.params.id;
+    res.contentType('image/*');
 
-const getImg = async (req,res) =>{
-    try {
-        const file = await gfs.files.findOne({ filename: req.params.filename });
-        const readStream = gfs.createReadStream(file.filename);
-        console.log(readStream)
-        readStream.pipe(res);
-        console.log(gfs.files)
-    } catch (error) {
-        res.send("not found");
-    }
-
-}
-
-const deleteImg = async (req,res)=> {
-    try {
-        await gfs.files.deleteOne({ filename: req.params.filename });
-        res.send("success");
-    } catch (error) {
-        console.log(error);
-        res.send("An error occured.");
-    }
-}
-
-module.exports = {
-    uploadImg,getImg,deleteImg
-}
+})
+module.exports = {UploadImg, upload}
