@@ -57,6 +57,18 @@ route.delete(
   controller.deleteBranch
 );
 route.post(
+  "/api/brtxnbypage",
+  useAuth,
+  checkRoleandPermissions(["showMembers"]),
+  controller.Pagination
+);
+route.post(
+  "/api/brtxcount/:id",
+  useAuth,
+  checkRoleandPermissions(["showMembers"]),
+  controller.GetCount
+);
+route.post(
   "/api/staff",
   useAuth,
   checkRoleandPermissions(["createEmployee"]),

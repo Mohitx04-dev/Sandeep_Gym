@@ -11,6 +11,7 @@ import UpdateMember from "../Members/UpdateMember"
 import Extend from "../Members/ExtendValidity";
 import PayDue from "../Members/PayDue"
 import ShowSales from "../branches/ShowSales";
+import ShowSalesP from "../branches/ShowSales/paginated";
 import Home from "../Home";
 import Signin from "../Auth/Signin";
 import SignUp from "../Auth/Signup";
@@ -28,6 +29,7 @@ import EditBranchName from "../branches/EditBranch";
 import ViewUsers from "../Auth/viewUser";
 import EditValidity from "../Members/EditValidity";
 import ViewMembersPaginated from "../Members/ViewMember/paginated";
+import Report from "../Members/Reports/report";
 
 function Main() {
   const [Status, setStatus] = useState(false)
@@ -73,13 +75,14 @@ function Main() {
          <Route exact path="/branches/branch-edit/:id" > <EditBranchName User={Usr}/> </Route>
          <Route exact path="/staff/view"><ViewStaff User={Usr} /></Route>
          <Route exact path="/staff/add"><AddStaff User={Usr}/></Route>
-         {/* <Route exact path="/member/view"><ViewMembers  User={Usr} Status={Status}/></Route> */}
+         <Route exact path="/member/reports"><Report  User={Usr} Status={Status}/></Route>
          <Route exact path="/member/view"><ViewMembersPaginated  User={Usr} Status={Status}/></Route>
-         <Route exact path="/member/reports"><Reports  User={Usr}/></Route>
+         {/* <Route exact path="/member/reports"><Reports  User={Usr}/></Route> */}
          <Route exact path="/member/add"><AddMember  User={Usr}/></Route>
          <Route exact path="/member/:id"><MemberPg  User={Usr}/></Route>
          <Route exact path="/member/:id/FullView"><MemberPg  User={Usr}/></Route>
-         <Route exact path="/sales/:name"><ShowSales  User={Usr}/></Route>
+         {/* <Route exact path="/sales/:name"><ShowSales  User={Usr}/></Route> */}
+         <Route exact path="/sales/:name"><ShowSalesP  User={Usr}/></Route>
          <Route exact path="/member/update/:id"><UpdateMember  User={Usr}/></Route>
          <Route exact path="/member/extend/:id"><Extend  User={Usr}/></Route>
          <Route exact path="/test"><ProfileImg  User={Usr}/></Route>

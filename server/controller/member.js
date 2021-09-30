@@ -44,6 +44,7 @@ exports.createMember = (req, res,next) => {
     Reference: req.body.Reference,
     Service: req.body.Service,
     url: req.body.url,
+    TotalDue : Pay.Due
   });
 
   if (Member.Branch == req.get("branch") || req.user.role == "superadmin")
@@ -310,12 +311,14 @@ exports.UpdateDue = (req, res,next) => {
   console.log(newId)
   Pay["_id"] = newId
   req.txid = newId
+  var Paid = Pay["Paid"]
+  Paid = parseInt(Paid)
   Pay["RecievedBy"] = req.user.username;
   console.log(req.body)
   if (id) {
     Members.findOneAndUpdate(
       { Cust_Id: id },
-      { $push: { Payment: Pay }},
+      { $push: { Payment: Pay }, $inc : {TotalDue:-Paid}},
     )
       .then((data) => {
         if (!data) {
@@ -401,17 +404,20 @@ exports.ExtendValidity = (req, res,next) => {
   console.log(newId)
   Pay["_id"] = newId
   req.txid = newId
+  var due = Pay["Due"];
+  due = parseInt(due)
   Pay["RecievedBy"] = req.user.username;
   const Validity = req.body.Valid_Till;
   var Branch;
   Members.findOne({ Cust_Id: id })
   .then((data) => { 
         Branch = data.Branch;
+        due += data.TotalDue;
   }).then(()=>{
         if((Branch==req.user.branch)||(req.user.role=='superadmin'||req.user.permissions['AllBranches'])) {
             Members.updateOne(
                 { Cust_Id: id },
-                { $push: { Payment: Pay }, Valid_Till: Validity }
+                { $push: { Payment: Pay }, Valid_Till: Validity, TotalDue : due}
               )
                 .then((data) => {
                   if (!data) {
@@ -445,6 +451,9 @@ exports.EditPayment = (req,res,next) => {
   Members.update(
         { Cust_Id: id, "Payment._id": txid },
         {        
+          $inc:{
+            TotalDue : (-parseInt(req.body.oldDue)+parseInt(req.body.Due)) 
+          },
           $set: {
             "Payment.$.Paid": req.body.Paid,
             "Payment.$.Due": req.body.Due,
@@ -574,7 +583,42 @@ exports.Pagination = (req,res)=>{
             "err": err
         })
     })
-  } else {
+  } 
+  else if(req.body.ValidityFilter) {
+    Members.find({Valid_Till : {"$lte":req.body.ValidityFilter[1], "$gte":req.body.ValidityFilter[0]}})
+    //skip takes argument to skip number of entries 
+    .skip((pageNumber - 1) * pagination)
+    //limit is number of Records we want to display
+    .limit(pagination)
+    .then(data => {
+        res.status(200).send({
+            "users": data
+        })
+    })
+    .catch(err => {
+        res.status(400).send({
+            "err": err
+        })
+    })
+  } 
+  else if(req.body.DueFind) {
+    Members.find({TotalDue : {"$gt":0}})
+    //skip takes argument to skip number of entries 
+    .skip((pageNumber - 1) * pagination)
+    //limit is number of Records we want to display
+    .limit(pagination)
+    .then(data => {
+        res.status(200).send({
+            "users": data
+        })
+    })
+    .catch(err => {
+        res.status(400).send({
+            "err": err
+        })
+    })
+  } 
+  else {
     Members.find({})
     //skip takes argument to skip number of entries 
     .skip((pageNumber - 1) * pagination)
@@ -633,7 +677,36 @@ exports.GetCount = (req,res)=>{
            "err" : err
        })
     })
-  } else {
+  } 
+  else if(req.body.ValidityFilter) {
+    Members.find({Valid_Till : {"$lte":req.body.ValidityFilter[1], "$gte":req.body.ValidityFilter[0]}})
+    .count()
+      .then(data => {
+        res.status(200).send({
+            "cnt" : data
+        })
+    })
+    .catch(err => {
+       res.status(400).send({
+           "err" : err
+       })
+    })
+  } 
+  else if(req.body.DueFind) {
+    Members.find({TotalDue : {"$gt":0}})
+    .count()
+      .then(data => {
+        res.status(200).send({
+            "cnt" : data
+        })
+    })
+    .catch(err => {
+       res.status(400).send({
+           "err" : err
+       })
+    })
+  } 
+  else {
    Members.find({})
       .count()
       .then(data => {

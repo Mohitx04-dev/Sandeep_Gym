@@ -48,7 +48,8 @@ function EditTxn(props) {
         Customer_Name: Userdt.Name,
         Amount: e.target[2].value,
         Cust_Id: Userdt.Cust_Id,
-        DueDate : new Date(e.target[6].value.valueOf())
+        DueDate : new Date(e.target[6].value.valueOf()),
+        oldDue : Pay.Due 
     };
     console.log(Article)
     axios

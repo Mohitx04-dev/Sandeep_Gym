@@ -215,3 +215,78 @@ exports.EditBranchName = (req, res,next)=>{
         res.status(500).send({ message : "Error Update Branch information"})
     })
 }
+
+
+
+exports.Pagination = (req,res)=>{
+    const pagination = req.body.pagination ? parseInt(req.body.pagination) : 10;
+    //PageNumber From which Page to Start 
+    const pageNumber = req.body.page ? parseInt(req.body.page) : 1;
+
+    if(req.body.Name) {
+      Branchs.find({Name : { "$regex": req.body.Name, "$options": "i" }})
+      .then(data => {
+          console.log('inside')
+        var Arr = data[0].Payments;
+          if(req.body.dateFilter) {
+              Arr = Arr.filter((el)=>{
+                  return (new Date(el.Date)<=new Date(req.body.dateFilter[1]) && new Date(el.Date)>=new Date(req.body.dateFilter[0]))}
+                  )
+            }
+            if(req.body.MemberId) {
+                Arr = Arr.filter((el)=>{
+                    return (el.Cust_Id==req.body.MemberId)}
+                    )
+              }
+            let cash=0;
+            let online=0;
+            Arr = Arr.slice((pageNumber - 1) * pagination,(pageNumber - 1) * pagination + pagination )
+            Arr.forEach(ele => {
+                if(ele.PayMethod==='CASH')
+                  cash+=parseInt(ele.Amount)
+                else  
+                  online+=parseInt(ele.Amount)
+            });
+            console.log(cash,online)
+
+          res.status(200).send({
+              "users": Arr,
+              "online" : online,
+              "cash" : cash
+          })
+      })
+      .catch(err => {
+          res.status(400).send({
+              "err": err
+          })
+      })
+    } 
+  }
+  
+exports.GetCount = (req,res)=>{
+    console.log(req.body.Name)
+    if(req.body.Name) {
+      Branchs.find({Name :req.body.Name })
+      .then(data => {
+        var Arr = data[0].Payments;
+        if(req.body.dateFilter) {
+            Arr = Arr.filter((el)=>{
+                return (new Date(el.Date)<=new Date(req.body.dateFilter[1]) && new Date(el.Date)>=new Date(req.body.dateFilter[0]))}
+                )
+        }
+        if(req.body.MemberId) {
+            Arr = Arr.filter((el)=>{
+                return (el.Cust_Id==req.body.MemberId)}
+                )
+          }
+        res.status(200).send({
+            "cnt" : Arr.length
+        })
+    })
+    .catch(err => {
+       res.status(400).send({
+           "err" : err
+       })
+    })
+    } 
+  }

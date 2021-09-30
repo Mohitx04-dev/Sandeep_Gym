@@ -97,6 +97,9 @@ var schema = new mongoose.Schema({
     },
     url : {
         type: String
+    },
+    TotalDue : {
+        type: Number
     }
 })
 

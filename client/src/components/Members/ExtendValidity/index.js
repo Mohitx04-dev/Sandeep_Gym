@@ -14,7 +14,7 @@ function addMonths(date, months) {
     return date;
   }
   function addDays(req, days) {
-    var ms = new Date(req).getTime() + (days - 1) * 86400000;
+    var ms = new Date(req).getTime() + (days) * 86400000;
     return new Date(ms);
   }
 function Extend (props) {

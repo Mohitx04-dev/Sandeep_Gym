@@ -49,7 +49,7 @@ export default function ViewMembersPaginated(props) {
       })
   }
       useEffect(() => {
-        getData()
+        getData()   
         getUsersCount()
       }, []);
 
@@ -95,7 +95,6 @@ export default function ViewMembersPaginated(props) {
         setMember([])
         axios.post('/api/memberByPage', queryParams, {headers:headers})
           .then(data => {
-            console.log("Data FEtched ", data)  
             for (var i = 0; i < data.data.users.length; i++) {
                 setMember(state => [...state, data.data.users[i]])
             }
@@ -117,7 +116,6 @@ export default function ViewMembersPaginated(props) {
           }).then(() => getUsers(CurrentPage))
       }
       let numberOfPages = 0;
-      console.log(Member)
       if (MemberCount % 10 === 0)
         numberOfPages = Math.floor(MemberCount / 10);
       else
@@ -127,7 +125,6 @@ export default function ViewMembersPaginated(props) {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(e.target[0].value);
                 setDate(e.target[0].value)
                 getUsersCount()
               }}
@@ -141,9 +138,7 @@ export default function ViewMembersPaginated(props) {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(e.target[0].value);
                 getUsersCount()
-                console.log(MemberCount)
               }}
             >
               <Form.Label>Enter Name</Form.Label>
@@ -155,7 +150,6 @@ export default function ViewMembersPaginated(props) {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(e.target[0].value);
                 getUsersCount()
 
               }}
