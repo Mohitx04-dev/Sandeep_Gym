@@ -22,6 +22,8 @@ export default function ViewMembersPaginated(props) {
     const [Name, setName] = useState("")
     const [PhoneId, setPhoneId] = useState()
     const [Rerender,setRerender] = useState()
+    const [MemberId,setMemberId] = useState("")
+
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': props.User.token,
@@ -86,6 +88,7 @@ export default function ViewMembersPaginated(props) {
         query["Valid_Till"] = ValidityDate;
         query["Name"] = Name;
         query["PhoneId"] = PhoneId;
+        query["MemberId"] = MemberId;
         if(query) {
             queryParams =  {
                 ...queryParams,
@@ -109,6 +112,7 @@ export default function ViewMembersPaginated(props) {
         query["Valid_Till"] = ValidityDate;
         query["Name"] = Name;
         query["PhoneId"] = PhoneId;
+        query["MemberId"] = MemberId;
         axios.post('/api/MemberCount/1',query,{headers:headers})
           .then(data => {
               setMemberCount(data.data.cnt)
@@ -151,7 +155,18 @@ export default function ViewMembersPaginated(props) {
               onSubmit={(e) => {
                 e.preventDefault();
                 getUsersCount()
-
+              }}
+            >
+              <Form.Label>Enter Member Id</Form.Label>
+              <Form.Control type="text" placholder="Enter Name" value={MemberId} onChange={(e)=>setMemberId(e.target.value)} onInput={toInputUppercase}/>
+              <Button className="p-2 my-2" variant="primary" type="submit">
+              Filter
+              </Button>
+            </Form>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                getUsersCount()
               }}
             >
               <Form.Label>Enter Phone Id</Form.Label>

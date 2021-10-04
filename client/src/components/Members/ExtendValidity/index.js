@@ -44,18 +44,22 @@ function Extend (props) {
         console.log(radio)
         var Month = e.target[2].value;
         console.log(Userdt.Valid_Till)
+        var Days = e.target[3].value;
+        console.log(Days)
         if(radio==0) {
             var Validity = new Date(Userdt.Valid_Till.valueOf());
+            Validity = addMonths(Validity, Month);
+            console.log(Validity)
+            Validity = addDays(Validity, Days);
+            console.log(Validity)
         }
         else {
             var Validity = new Date(e.target[4].value.valueOf());
+            Validity = addMonths(Validity, Month);
+            console.log(Validity)
+            Validity = addDays(Validity, Days-1);
+            console.log(Validity)
         }
-        var Days = e.target[3].value;
-        console.log(Days)
-        Validity = addMonths(Validity, Month);
-        console.log(Validity)
-        Validity = addDays(Validity, Days);
-        console.log(Validity)
         var Article = {
             Pay : {Date : new Date(e.target[4].value.valueOf()),
                 Total : e.target[5].value,

@@ -30,7 +30,7 @@ function EditValidity(props) {
   const sub = (e) => {
     e.preventDefault();
     var Article = {
-        Valid_Till: e.target[0].value,
+        Valid_Till: new Date(e.target[0].value.valueOf()),
     };
     console.log(Article)
     axios

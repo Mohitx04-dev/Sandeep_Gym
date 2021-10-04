@@ -551,7 +551,24 @@ exports.Pagination = (req,res)=>{
             "err": err
         })
     })
-  } else if(req.body.PhoneId) {
+  } 
+  else if(req.body.MemberId) {
+    Members.find({Cust_Id : req.body.MemberId})
+    //skip takes argument to skip number of entries 
+    .skip((pageNumber - 1) * pagination)
+    //limit is number of Records we want to display
+    .limit(pagination)
+    .then(data => {
+        res.status(200).send({
+            "users": data
+        })
+    })
+    .catch(err => {
+        res.status(400).send({
+            "err": err
+        })
+    })
+  }else if(req.body.PhoneId) {
     Members.find({Contact_No : req.body.PhoneId})
     //skip takes argument to skip number of entries 
     .skip((pageNumber - 1) * pagination)
@@ -664,7 +681,22 @@ exports.GetCount = (req,res)=>{
          "err" : err
      })
   })
-  } else if(req.body.Valid_Till) {
+  } 
+  else if(req.body.MemberId) {
+    Members.find({Cust_Id : req.body.MemberId})
+    .count()
+    .then(data => {
+      res.status(200).send({
+          "cnt" : data
+      })
+  })
+  .catch(err => {
+     res.status(400).send({
+         "err" : err
+     })
+  })
+  }
+  else if(req.body.Valid_Till) {
     Members.find({Valid_Till : {"$lt":req.body.Valid_Till}})
     .count()
       .then(data => {
