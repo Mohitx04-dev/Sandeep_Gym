@@ -24,7 +24,7 @@ function BranchSelector(prop) {
         return (
             <>
             <Form.Label className="Font">Name of Branch</Form.Label>
-            <Form.Control as="select" defaultValue={prop.Member ? prop.Member.Branch : (prop.user ? prop.user.branch : null)} >
+            <Form.Control as="select" defaultValue={prop.Member ? prop.Member.Branch : (prop.user ? prop.user.branch : null)} onChange={prop.onChange ? prop.onChange : null} >
               {
               Branches.map((br) => {
                 return <option key={br}  selected={(prop.Member && prop.Member.Branch==br)||(prop.user && prop.user.branch==br) ? true : false} value={br}>{br}</option>;

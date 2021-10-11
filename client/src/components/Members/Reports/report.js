@@ -12,7 +12,7 @@ import PaginationPage from '../utility/Pagination'
 
 export default function Report(props) {
   const [Member, setMember] = useState([]);
-  const [Branch, setBranch] = useState([]);
+  const [Branch, setBranch] = useState("");
   const [CurrentBranch, setCurrentBranch] = useState();
   const [modalShow, setModalShow] = useState(false);
   const [req, setreq] = useState(false);
@@ -71,6 +71,8 @@ export default function Report(props) {
     } else if(viewType==1) {
         query["DueFind"] = true;
     }
+      query["Branch"] = Branch;
+  
     if (query) {
       queryParams = {
         ...queryParams,
@@ -92,6 +94,7 @@ export default function Report(props) {
   const getUsersCount = () => {
     //Passing 1 as Argument needed to get count
     var query = {};
+    query["Branch"] = Branch;
     if(startDate && viewType==0) {
         var ValidityFilter = [startDate._d,endDate._d]
         query["ValidityFilter"] = ValidityFilter;
@@ -167,14 +170,12 @@ export default function Report(props) {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              var newArray = Member.filter(function (el) {
-               return el.Branch == e.target[0].value;
-             });
-             setMember(newArray);
-             
+              getUsersCount();
             }}
           >
-            <BranchSelector User={props.User} />
+            <BranchSelector User={props.User} onChange={(e)=>{
+                setBranch(e.target.value)
+            }}/>
 
             <Button className="p-2 my-2" variant="primary" type="submit">
               Filter
@@ -220,15 +221,14 @@ export default function Report(props) {
       ) : (
         <div>
           <Form
-            onSubmit={(e) => {
-              e.preventDefault();
-              var newArray = Member.filter(function (el) {
-                return el.Branch == e.target[0].value;
-              });
-              setMember(newArray);
-            }}
+           onSubmit={(e) => {
+            e.preventDefault();
+            getUsersCount();
+          }}
           >
-            <BranchSelector User={props.User} />
+            <BranchSelector User={props.User}  onChange={(e)=>{
+                setBranch(e.target.value)
+            }}/>
             <Button className="p-2 my-2" variant="primary" type="submit">
               Filter
             </Button>
@@ -255,7 +255,7 @@ export default function Report(props) {
                 show={modalShow}
                 reqDelete={() => {
                   axios
-                    .delete("http://localhost:3000/api/member/" + toDelete, {
+                    .delete("/api/member/" + toDelete, {
                       headers: headers,
                     })
                     .then(() => {

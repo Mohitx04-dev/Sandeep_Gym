@@ -8,7 +8,8 @@ const connectDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
-            useCreateIndex: true
+            useCreateIndex: true,
+            ignoreUndefined : true
         })
         con.connection.once("open", function () {
             gfs = Grid(con.connection.db);
