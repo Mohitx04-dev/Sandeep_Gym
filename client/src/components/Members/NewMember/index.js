@@ -19,7 +19,6 @@ function addDays(req, days) {
   var ms = new Date(req).getTime() + (days - 1) * 86400000;
   return new Date(ms);
 }
-
 export default function AddMember(props) {
   const [sucModalShow, setsucModalShow] = useState(false);
   const [errModalShow, seterrModalShow] = useState(false);

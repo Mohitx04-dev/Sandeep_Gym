@@ -151,8 +151,8 @@ const MemberForm = (prop) => {
             {!prop.Member ?  <div className="col-6">
                         <Form.Label className="Font">Months</Form.Label>
                         <Form.Control as="select" >
-                        {[...Array(12)].map((e, i) => (
-                        <option key={i} value={i + 1}>{i + 1}</option>
+                        {[...Array(13)].map((e, i) => (
+                        <option key={i} value={i}>{i}</option>
                         ))}
                         </Form.Control>
                         <Selecter
